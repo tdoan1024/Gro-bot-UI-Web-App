@@ -2,34 +2,49 @@
     ViewBag.Title = "Home Page";
 }
 
+<style>
+    .title-1 {
+        font-size: 4.5rem;
+        font-weight: 300;
+        line-height: 1.2;
+        color: darkgreen
+    }
 
+    .box {
+        border: 5px solid green;
+        width:49%;
+        padding: 40px;
+        margin: 5px;
+    }
+</style>
 <header>
-    <div class="container">
-        <h1 style="color:green;">GRO-BOT</h1>
-        <p class="lead">Gro-bot is an automated gardening system...</p>
+    <div class="text-center">
+        <div style="" class="centered">
+            <div>
+                <h1 class="title-1">Gro-Bot  -  An Automated Gardening System</h1>
+                <a href="~/Home/Contact" class="btn btn-success" target="_blank">Contact us</a>
+            </div>
+        </div>
+        @*Logo Image*@
+        <div style="text-align: center"><img src="~/Content/Images/GrobotLogo.png" title="Gro-Bot" /></div>
+
     </div>
 </header>
 
 <body>
     <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
+        <div class="box col-sm-12 col-lg-6">
+            <h2>Getting your garden started</h2>
             <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
+                Pick a plant, and let us know how you want us to take care of it!
             </p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            <p><a class="btn btn-success" href="~/Grobot/CreateGarden">Start Your Garden &raquo;</a></p>
         </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        
+        <div class="box col-sm-12 col-lg-6">
+            <h2>See your garden</h2>
+            <p>Take a look at your garden's health</p>
+            <p><a class="btn btn-success" href="~/Grobot/ManageGarden">See Your Garden &raquo;</a></p>
         </div>
     </div>
 

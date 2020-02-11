@@ -1,13 +1,22 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>Login History</h3>
+@*<h2>@ViewBag.Title.</h2>*@
 
-<p>Current user: @ViewBag.CurrentUser</p>
-<ul>
-    @foreach (var timestamp in ViewBag.Logins)
-    {
-        <li>Login at @timestamp</li>
-    }
-</ul>
+@Scripts.Render("~/bundles/jquery")
+
+@*Logo Image*@
+<div style="text-align: center"><img src="~/Content/Images/GrobotLogo.png" title="Gro-Bot"/></div>
+
+@*Gro-bot App About Description *@
+<h2 style="text-align: center">Gro-Bot Web Application</h2>
+<h2 style="text-align: center">Version 1.0.0</h2>
+<h2 style="text-align: center">Green Eden 2019-2020 - Seattle Pacific University</h2>
+<br />
+<br />
+<h3 style="text-align: center">Designed, Managed and Developed By</h3>
+<h3 style="text-align: center">Tai Doan</h3>
+<br />
+<br />
+<br />
+
