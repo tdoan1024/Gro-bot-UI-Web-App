@@ -5,8 +5,285 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create New Garden</h2>
 
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Create New Garden</title>
+
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <style>
+        #dest {
+            animation-duration: 3s;
+        }
+
+        .SlowAnimation {
+            animation-duration: 3s;
+        }
+
+        .chartArea {
+            width: 75px;
+            height: 75px;
+        }
+
+        .sheen20 {
+            background-color: blue;
+            color: lawngreen;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .sheen5 {
+            background-color: lawngreen;
+            color: blue;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .sheenNone {
+            background-color: darkgrey;
+            color: white;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .schedule {
+            font-size: 12px;
+        }
+
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .customDropDown {
+            z-index: 100;
+        }
+
+        .modal-lg-wider {
+            width: 70%;
+        }
+
+        .main {
+            margin-right: 50px;
+        }
+ 
+        .Green{
+            background-color: #3be26a;
+            color:white;
+        }
+ 
+        .GreenText {
+            color: #3be26a;
+        }
+ 
+        .Red{
+            background-color: #f70919;
+            color:white;
+        }
+ 
+        .RedText {
+            color: #f70919;
+        }
+ 
+        .DashboardTitles {
+            background-color: #707372;
+            color: white;
+        
+        }
+ 
+        .breakoutTotal {
+            background-color: lightgray;
+            color: black;
+            border-color: #707372 !important;
+        }
+ 
+        .panel-default > .panel-heading {
+            color: white;
+            background-color: #707372;
+            border-color: #ddd;
+        }
+ 
+        .canvasSize {
+            height: 350px;
+        }
+ 
+        .yearlyTotals {
+            border-color: #707372 !important;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!--Modal to add new tool-->
+    <div class="modal fade" id="myCyclesModal" style="z-index:299999;" tabindex="-1" role="dialog" aria-labelledby="myCyclesModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myCyclesModalLabel">Tool Cycle Tracking</h4>
+                </div>
+                <div class="modal-body well-sm">
+                    <div id="stuffToolUI">put stuff here</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>New Garden</h2>
+
+    <!--Form to input tool's field values, the field list is different for different types-->
+    <form id="AddInstanceForm" class="hidden" style="margin-left: 2em" autocomplete="off">
+        <div class="row">
+            <!--Drop down list of tool types-->
+            <div class="form-group col-md-6">
+                <label>Type of Tool</label>
+                @Html.DropDownListFor(m => m.typeID, new SelectList(Model._ToolTypeList, "typeID", "typeName"), "Select a tool type", new { @class = "form-control" })
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12 well-sm">
+                @if (Model._NewToolInstanceFieldList != null)
+                {
+                    <div class="row">
+                        <!--Input tool name-->
+                        <div class="form-group col-md-2">
+                            <label>Tool name</label>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input class="form-control" id="toolNameID" placeholder="Tool name" value="">
+                        </div>
+                    </div>
+                    <div id="ToolValueDiv">
+                        <!--Field available for each tool type-->
+                        @foreach (var i1 in Model._NewToolInstanceFieldList)
+                        {
+                            if (i1.dataType == "Float" || i1.dataType == "Alphanumeric")
+                            {
+                                //Disable calculated field, let server handle the calculation
+                                if (
+                                    i1.fieldName == "Total Mileage" ||
+                                    i1.fieldName == "Average Mileage" ||
+                                    i1.fieldName == "Resharpening Cost" ||
+                                    i1.fieldName == "Total Cost")
+                                {
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>@i1.fieldName</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <input data-fieldid="@i1.fieldID" type="text" class="form-control field" placeholder="@i1.fieldName" disabled />
+
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>@i1.fieldName</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <input data-fieldid="@i1.fieldID" type="text" class="form-control field" placeholder="@i1.fieldName" />
+
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else if (i1.dataType == "Integers")
+                            {
+                                if (i1.fieldName == "Total-on-hand Qty" ||
+                                i1.fieldName == "Cycle Number")
+                                {
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>@i1.fieldName</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <input data-fieldid="@i1.fieldID" name="fieldNumberInput" type="number" class="form-control field" placeholder="@i1.fieldName" disabled />
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label>@i1.fieldName</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <input data-fieldid="@i1.fieldID" name="fieldNumberInput" type="number" class="form-control field" placeholder="@i1.fieldName" />
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else if (i1.dataType == "Bit")
+                            {
+                                <div class="row">
+                                    <label class="form-group col-md-2">@i1.fieldName</label>
+
+                                    <div class="col-md-4">
+                                        <input id='customCheck' data-fieldid="@i1.fieldID" type='checkbox' class="field">
+                                        <span>Yes</span>
+                                    </div><br />
+                                </div>
+                            }
+                            else if (i1.dataType == "Date")
+                            {
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>@i1.fieldName</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class='input-group date datepicker' id="dateIssue">
+                                            <input data-fieldid="@i1.fieldID" type='text' class='form-control field' placeholder="mm/dd/yyyy">
+                                            <div class='input-group-addon'>
+                                                <span class='glyphicon glyphicon-calendar'></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            }
+                            else if (i1.dataType == "List")
+                            {
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>@i1.fieldName</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select data-fieldid="@i1.fieldID" class='form-control field' id="statusSelect">
+                                            <option selected value="0">Choose Tool Status</option>
+                                            <option value='New'>New</option>
+                                            <option value='Some chips'>Some chips</option>
+                                            <option value='Major chips'>Major chips</option>
+                                            <option value='Broken'>Broken</option>
+                                        </select>
+                                    </div>
+                                </div><br />
+                            }
+                        }
+                    </div>
+                }
+                <!--2 Buttons, submit to add and cancel to close-->
+                <button type="button" class="btn btn-primary" id="InsertInstanceButton">Submit</button>
+                <button type="button" class="btn btn-danger" id="CancelAddInstance">Cancel</button>
+
+            </div>
+        </div>
+    </form>
+    <hr />
+
+</body>
+
+
+</html>
 
 
 
