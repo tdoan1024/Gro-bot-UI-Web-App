@@ -48,15 +48,15 @@ namespace Gro_bot
     partial void InsertGardenBed(GardenBed instance);
     partial void UpdateGardenBed(GardenBed instance);
     partial void DeleteGardenBed(GardenBed instance);
-    partial void InsertPlantType(PlantType instance);
-    partial void UpdatePlantType(PlantType instance);
-    partial void DeletePlantType(PlantType instance);
     partial void InsertSchedule(Schedule instance);
     partial void UpdateSchedule(Schedule instance);
     partial void DeleteSchedule(Schedule instance);
     partial void InsertThreshold(Threshold instance);
     partial void UpdateThreshold(Threshold instance);
     partial void DeleteThreshold(Threshold instance);
+    partial void InsertPlantType(PlantType instance);
+    partial void UpdatePlantType(PlantType instance);
+    partial void DeletePlantType(PlantType instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -137,14 +137,6 @@ namespace Gro_bot
 			}
 		}
 		
-		public System.Data.Linq.Table<PlantType> PlantTypes
-		{
-			get
-			{
-				return this.GetTable<PlantType>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Schedule> Schedules
 		{
 			get
@@ -158,6 +150,14 @@ namespace Gro_bot
 			get
 			{
 				return this.GetTable<Threshold>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PlantType> PlantTypes
+		{
+			get
+			{
+				return this.GetTable<PlantType>();
 			}
 		}
 	}
@@ -1192,152 +1192,6 @@ namespace Gro_bot
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlantTypes")]
-	public partial class PlantType : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _typeID;
-		
-		private string _typeName;
-		
-		private EntitySet<GardenBed> _GardenBeds;
-		
-		private EntityRef<Threshold> _Threshold;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OntypeIDChanging(int value);
-    partial void OntypeIDChanged();
-    partial void OntypeNameChanging(string value);
-    partial void OntypeNameChanged();
-    #endregion
-		
-		public PlantType()
-		{
-			this._GardenBeds = new EntitySet<GardenBed>(new Action<GardenBed>(this.attach_GardenBeds), new Action<GardenBed>(this.detach_GardenBeds));
-			this._Threshold = default(EntityRef<Threshold>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_typeID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int typeID
-		{
-			get
-			{
-				return this._typeID;
-			}
-			set
-			{
-				if ((this._typeID != value))
-				{
-					this.OntypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._typeID = value;
-					this.SendPropertyChanged("typeID");
-					this.OntypeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_typeName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string typeName
-		{
-			get
-			{
-				return this._typeName;
-			}
-			set
-			{
-				if ((this._typeName != value))
-				{
-					this.OntypeNameChanging(value);
-					this.SendPropertyChanging();
-					this._typeName = value;
-					this.SendPropertyChanged("typeName");
-					this.OntypeNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantType_GardenBed", Storage="_GardenBeds", ThisKey="typeID", OtherKey="typeID")]
-		public EntitySet<GardenBed> GardenBeds
-		{
-			get
-			{
-				return this._GardenBeds;
-			}
-			set
-			{
-				this._GardenBeds.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantType_Threshold", Storage="_Threshold", ThisKey="typeID", OtherKey="typeID", IsUnique=true, IsForeignKey=false)]
-		public Threshold Threshold
-		{
-			get
-			{
-				return this._Threshold.Entity;
-			}
-			set
-			{
-				Threshold previousValue = this._Threshold.Entity;
-				if (((previousValue != value) 
-							|| (this._Threshold.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Threshold.Entity = null;
-						previousValue.PlantType = null;
-					}
-					this._Threshold.Entity = value;
-					if ((value != null))
-					{
-						value.PlantType = this;
-					}
-					this.SendPropertyChanged("Threshold");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_GardenBeds(GardenBed entity)
-		{
-			this.SendPropertyChanging();
-			entity.PlantType = this;
-		}
-		
-		private void detach_GardenBeds(GardenBed entity)
-		{
-			this.SendPropertyChanging();
-			entity.PlantType = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Schedule")]
 	public partial class Schedule : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1757,6 +1611,320 @@ namespace Gro_bot
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlantTypes")]
+	public partial class PlantType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _typeID;
+		
+		private string _typeName;
+		
+		private System.Nullable<int> _cycle;
+		
+		private System.Nullable<int> _recWaterPerDay;
+		
+		private System.Nullable<int> _recFertilizerPerMonth;
+		
+		private System.Nullable<int> _lowestTemp;
+		
+		private System.Nullable<int> _highestTemp;
+		
+		private string _lowestMoisture;
+		
+		private string _highestMoisture;
+		
+		private EntitySet<GardenBed> _GardenBeds;
+		
+		private EntityRef<Threshold> _Threshold;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OntypeIDChanging(int value);
+    partial void OntypeIDChanged();
+    partial void OntypeNameChanging(string value);
+    partial void OntypeNameChanged();
+    partial void OncycleChanging(System.Nullable<int> value);
+    partial void OncycleChanged();
+    partial void OnrecWaterPerDayChanging(System.Nullable<int> value);
+    partial void OnrecWaterPerDayChanged();
+    partial void OnrecFertilizerPerMonthChanging(System.Nullable<int> value);
+    partial void OnrecFertilizerPerMonthChanged();
+    partial void OnlowestTempChanging(System.Nullable<int> value);
+    partial void OnlowestTempChanged();
+    partial void OnhighestTempChanging(System.Nullable<int> value);
+    partial void OnhighestTempChanged();
+    partial void OnlowestMoistureChanging(string value);
+    partial void OnlowestMoistureChanged();
+    partial void OnhighestMoistureChanging(string value);
+    partial void OnhighestMoistureChanged();
+    #endregion
+		
+		public PlantType()
+		{
+			this._GardenBeds = new EntitySet<GardenBed>(new Action<GardenBed>(this.attach_GardenBeds), new Action<GardenBed>(this.detach_GardenBeds));
+			this._Threshold = default(EntityRef<Threshold>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_typeID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int typeID
+		{
+			get
+			{
+				return this._typeID;
+			}
+			set
+			{
+				if ((this._typeID != value))
+				{
+					this.OntypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._typeID = value;
+					this.SendPropertyChanged("typeID");
+					this.OntypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_typeName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string typeName
+		{
+			get
+			{
+				return this._typeName;
+			}
+			set
+			{
+				if ((this._typeName != value))
+				{
+					this.OntypeNameChanging(value);
+					this.SendPropertyChanging();
+					this._typeName = value;
+					this.SendPropertyChanged("typeName");
+					this.OntypeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cycle", DbType="Int")]
+		public System.Nullable<int> cycle
+		{
+			get
+			{
+				return this._cycle;
+			}
+			set
+			{
+				if ((this._cycle != value))
+				{
+					this.OncycleChanging(value);
+					this.SendPropertyChanging();
+					this._cycle = value;
+					this.SendPropertyChanged("cycle");
+					this.OncycleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_recWaterPerDay", DbType="Int")]
+		public System.Nullable<int> recWaterPerDay
+		{
+			get
+			{
+				return this._recWaterPerDay;
+			}
+			set
+			{
+				if ((this._recWaterPerDay != value))
+				{
+					this.OnrecWaterPerDayChanging(value);
+					this.SendPropertyChanging();
+					this._recWaterPerDay = value;
+					this.SendPropertyChanged("recWaterPerDay");
+					this.OnrecWaterPerDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_recFertilizerPerMonth", DbType="Int")]
+		public System.Nullable<int> recFertilizerPerMonth
+		{
+			get
+			{
+				return this._recFertilizerPerMonth;
+			}
+			set
+			{
+				if ((this._recFertilizerPerMonth != value))
+				{
+					this.OnrecFertilizerPerMonthChanging(value);
+					this.SendPropertyChanging();
+					this._recFertilizerPerMonth = value;
+					this.SendPropertyChanged("recFertilizerPerMonth");
+					this.OnrecFertilizerPerMonthChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lowestTemp", DbType="Int")]
+		public System.Nullable<int> lowestTemp
+		{
+			get
+			{
+				return this._lowestTemp;
+			}
+			set
+			{
+				if ((this._lowestTemp != value))
+				{
+					this.OnlowestTempChanging(value);
+					this.SendPropertyChanging();
+					this._lowestTemp = value;
+					this.SendPropertyChanged("lowestTemp");
+					this.OnlowestTempChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_highestTemp", DbType="Int")]
+		public System.Nullable<int> highestTemp
+		{
+			get
+			{
+				return this._highestTemp;
+			}
+			set
+			{
+				if ((this._highestTemp != value))
+				{
+					this.OnhighestTempChanging(value);
+					this.SendPropertyChanging();
+					this._highestTemp = value;
+					this.SendPropertyChanged("highestTemp");
+					this.OnhighestTempChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lowestMoisture", DbType="NVarChar(50)")]
+		public string lowestMoisture
+		{
+			get
+			{
+				return this._lowestMoisture;
+			}
+			set
+			{
+				if ((this._lowestMoisture != value))
+				{
+					this.OnlowestMoistureChanging(value);
+					this.SendPropertyChanging();
+					this._lowestMoisture = value;
+					this.SendPropertyChanged("lowestMoisture");
+					this.OnlowestMoistureChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_highestMoisture", DbType="NVarChar(50)")]
+		public string highestMoisture
+		{
+			get
+			{
+				return this._highestMoisture;
+			}
+			set
+			{
+				if ((this._highestMoisture != value))
+				{
+					this.OnhighestMoistureChanging(value);
+					this.SendPropertyChanging();
+					this._highestMoisture = value;
+					this.SendPropertyChanged("highestMoisture");
+					this.OnhighestMoistureChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantType_GardenBed", Storage="_GardenBeds", ThisKey="typeID", OtherKey="typeID")]
+		public EntitySet<GardenBed> GardenBeds
+		{
+			get
+			{
+				return this._GardenBeds;
+			}
+			set
+			{
+				this._GardenBeds.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantType_Threshold", Storage="_Threshold", ThisKey="typeID", OtherKey="typeID", IsUnique=true, IsForeignKey=false)]
+		public Threshold Threshold
+		{
+			get
+			{
+				return this._Threshold.Entity;
+			}
+			set
+			{
+				Threshold previousValue = this._Threshold.Entity;
+				if (((previousValue != value) 
+							|| (this._Threshold.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Threshold.Entity = null;
+						previousValue.PlantType = null;
+					}
+					this._Threshold.Entity = value;
+					if ((value != null))
+					{
+						value.PlantType = this;
+					}
+					this.SendPropertyChanged("Threshold");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_GardenBeds(GardenBed entity)
+		{
+			this.SendPropertyChanging();
+			entity.PlantType = this;
+		}
+		
+		private void detach_GardenBeds(GardenBed entity)
+		{
+			this.SendPropertyChanging();
+			entity.PlantType = null;
 		}
 	}
 }

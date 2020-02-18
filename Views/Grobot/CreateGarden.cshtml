@@ -138,151 +138,126 @@
     </div>
 
     <h2>New Garden</h2>
+    <hr />
 
     <!--Form to input tool's field values, the field list is different for different types-->
-    <form id="AddInstanceForm" class="hidden" style="margin-left: 2em" autocomplete="off">
+    <form id="CreateGardenForm" @*style="margin-left: 2em"*@ autocomplete="off">
+
+
         <div class="row">
             <!--Drop down list of tool types-->
-            <div class="form-group col-md-6">
-                <label>Type of Tool</label>
-                @Html.DropDownListFor(m => m.typeID, new SelectList(Model._ToolTypeList, "typeID", "typeName"), "Select a tool type", new { @class = "form-control" })
+            <div class="col-lg-2">
+                <label>Type of Plant</label>
             </div>
+            <div class="col-lg-4">
+                @Html.DropDownListFor(m => m.plantTypeID, new SelectList(Model._PlantTypeList, "plantTypeID", "plantTypeName"), "Select type of plant", new { @class = "form-control" })
+                @*<div class="form-inline">
+                    <input type="text" name="newPlantType" class="form-control" placeholder="Add New Plant Type..."/>
+                    <button class="btn btn-primary" id="AddTypeBtn">Save</button>
+                </div>*@
+
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Bed Name</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" placeholder="Enter Bed Name" />
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Bed Dimension (inch)</label>
+            </div>
+
+            <div class="col-lg-2">
+                <input type="text" class="form-control" placeholder="Length" />
+            </div>
+            <div class="col-lg-2">
+                <input type="text" class="form-control" placeholder="Width" />
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Cycle (days)</label>
+            </div>
+            <div class="col-lg-4">
+                <span class="form-control">@Model.plantTypeCycle</span>
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-2">
+                <label>How often to water? (daily)</label>
+            </div>
+            <div class="col-lg-4">
+                <input class="form-control" value="@Model.plantTypeRecWaterSchedule (Recommended)" />
+            </div>
+            <div class="col-lg-2">
+                <label>Time(s)/day</label>
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-2">
+                <label>How often to fertilize? (monthly)</label>
+            </div>
+            <div class="col-lg-4">
+                <span class="form-control" contenteditable="true">@Model.plantTypeRecFertSchedule (Recommended)</span>
+                <span>Time(s)</span>
+            </div>
+            <div class="col-lg-2">
+                <label>Time(s)/month</label>
+            </div>
+
         </div>
         <hr />
-        <div class="row">
-            <div class="col-lg-12 well-sm">
-                @if (Model._NewToolInstanceFieldList != null)
-                {
-                    <div class="row">
-                        <!--Input tool name-->
-                        <div class="form-group col-md-2">
-                            <label>Tool name</label>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <input class="form-control" id="toolNameID" placeholder="Tool name" value="">
-                        </div>
-                    </div>
-                    <div id="ToolValueDiv">
-                        <!--Field available for each tool type-->
-                        @foreach (var i1 in Model._NewToolInstanceFieldList)
-                        {
-                            if (i1.dataType == "Float" || i1.dataType == "Alphanumeric")
-                            {
-                                //Disable calculated field, let server handle the calculation
-                                if (
-                                    i1.fieldName == "Total Mileage" ||
-                                    i1.fieldName == "Average Mileage" ||
-                                    i1.fieldName == "Resharpening Cost" ||
-                                    i1.fieldName == "Total Cost")
-                                {
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label>@i1.fieldName</label>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <input data-fieldid="@i1.fieldID" type="text" class="form-control field" placeholder="@i1.fieldName" disabled />
 
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label>@i1.fieldName</label>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <input data-fieldid="@i1.fieldID" type="text" class="form-control field" placeholder="@i1.fieldName" />
+        <button type="button" class="btn btn-success" id="CreateNewGarden">Submit</button>
+        <button type="button" class="btn btn-danger" id="CancelNewGarden">Cancel</button>
 
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            else if (i1.dataType == "Integers")
-                            {
-                                if (i1.fieldName == "Total-on-hand Qty" ||
-                                i1.fieldName == "Cycle Number")
-                                {
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label>@i1.fieldName</label>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <input data-fieldid="@i1.fieldID" name="fieldNumberInput" type="number" class="form-control field" placeholder="@i1.fieldName" disabled />
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label>@i1.fieldName</label>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <input data-fieldid="@i1.fieldID" name="fieldNumberInput" type="number" class="form-control field" placeholder="@i1.fieldName" />
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            else if (i1.dataType == "Bit")
-                            {
-                                <div class="row">
-                                    <label class="form-group col-md-2">@i1.fieldName</label>
-
-                                    <div class="col-md-4">
-                                        <input id='customCheck' data-fieldid="@i1.fieldID" type='checkbox' class="field">
-                                        <span>Yes</span>
-                                    </div><br />
-                                </div>
-                            }
-                            else if (i1.dataType == "Date")
-                            {
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>@i1.fieldName</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class='input-group date datepicker' id="dateIssue">
-                                            <input data-fieldid="@i1.fieldID" type='text' class='form-control field' placeholder="mm/dd/yyyy">
-                                            <div class='input-group-addon'>
-                                                <span class='glyphicon glyphicon-calendar'></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><br />
-                            }
-                            else if (i1.dataType == "List")
-                            {
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>@i1.fieldName</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <select data-fieldid="@i1.fieldID" class='form-control field' id="statusSelect">
-                                            <option selected value="0">Choose Tool Status</option>
-                                            <option value='New'>New</option>
-                                            <option value='Some chips'>Some chips</option>
-                                            <option value='Major chips'>Major chips</option>
-                                            <option value='Broken'>Broken</option>
-                                        </select>
-                                    </div>
-                                </div><br />
-                            }
-                        }
-                    </div>
-                }
-                <!--2 Buttons, submit to add and cancel to close-->
-                <button type="button" class="btn btn-primary" id="InsertInstanceButton">Submit</button>
-                <button type="button" class="btn btn-danger" id="CancelAddInstance">Cancel</button>
-
-            </div>
-        </div>
     </form>
     <hr />
 
+    @section scripts
+    {
+        <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript">
+            $('#CreateNewGarden').click(function () {
+                confirm('Please make sure you have filled in the seeds of your choice!')
+            })
+
+            function reloadPage(plantTypeID) {
+                var locPage = "/Grobot/CreateGarden";
+
+                if (plantTypeID != '0' && plantTypeID != '') {
+                    locPage += "?plantTypeID=" + plantTypeID;
+                }
+                window.location.href = locPage;
+            }
+
+            $('#plantTypeID').change(function () {
+                reloadPage($(this).val());
+            })
+
+            $(document).ready(function () {
+
+            })
+        </script>
+
+
+    }
+
 </body>
-
-
 </html>
 
 

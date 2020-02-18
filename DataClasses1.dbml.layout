@@ -38,12 +38,6 @@
         <elementListCompartment Id="2d154282-ea01-4271-9151-4733b85f0fa7" absoluteBounds="3.515, 4.335, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b69c94bc-f387-4b90-a6c9-5bfe87c7d6c0" absoluteBounds="0.75, 5.25, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/DataClasses1DataContext/PlantType" />
-      <nestedChildShapes>
-        <elementListCompartment Id="19416fb7-dd69-49ef-9ac1-d7a605a8b1dd" absoluteBounds="0.765, 5.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="de373fd0-46bd-4923-b2cc-a45ef9543ffd" absoluteBounds="6.25, 8, 2, 1.9631982421875005">
       <DataClassMoniker Name="/DataClasses1DataContext/Schedule" />
       <nestedChildShapes>
@@ -91,13 +85,6 @@
         <classShapeMoniker Id="37334c62-9914-48e0-a789-594ae856b237" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 5.25); (1.75 : 4.5624995); (3.5 : 4.5624995)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/DataClasses1DataContext/PlantType/PlantType_GardenBed" />
-      <nodes>
-        <classShapeMoniker Id="b69c94bc-f387-4b90-a6c9-5bfe87c7d6c0" />
-        <classShapeMoniker Id="f290b4b5-db0e-4c6a-8a92-239c2bd9de42" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(5.5 : 5.1994429077524); (5.81607443490112 : 5.51551734265353 : JumpStart); (5.93392556509888 : 5.63336847285128 : JumpEnd); (5.9375 : 5.6369429077524); (5.9375 : 8.98159912109375); (6.25 : 8.98159912109375)]" fixedFrom="NotFixed" fixedTo="Algorithm">
       <AssociationMoniker Name="/DataClasses1DataContext/GardenBed/GardenBed_Schedule" />
       <nodes>
@@ -105,10 +92,23 @@
         <classShapeMoniker Id="de373fd0-46bd-4923-b2cc-a45ef9543ffd" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 6.44399251302083); (1.75 : 7.23244516145833); (3.5 : 7.23244516145833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="68e7f15f-5352-4bce-ba9c-9fb7f4ca3c55" absoluteBounds="0.75, 5, 2, 2.5401025390625">
+      <DataClassMoniker Name="/DataClasses1DataContext/PlantType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bf14c5c5-b095-450e-9428-c360d004e334" absoluteBounds="0.76500000000000012, 5.46, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.75 : 5); (1.75 : 4.4374995); (3.5 : 4.4374995)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClasses1DataContext/PlantType/PlantType_GardenBed" />
+      <nodes>
+        <classShapeMoniker Id="68e7f15f-5352-4bce-ba9c-9fb7f4ca3c55" />
+        <classShapeMoniker Id="f290b4b5-db0e-4c6a-8a92-239c2bd9de42" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 6.89505126953125); (3.5 : 6.89505126953125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/DataClasses1DataContext/PlantType/PlantType_Threshold" />
       <nodes>
-        <classShapeMoniker Id="b69c94bc-f387-4b90-a6c9-5bfe87c7d6c0" />
+        <classShapeMoniker Id="68e7f15f-5352-4bce-ba9c-9fb7f4ca3c55" />
         <classShapeMoniker Id="81e8645e-2125-4c8b-b766-a177e7ffd542" />
       </nodes>
     </associationConnector>

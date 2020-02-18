@@ -52,14 +52,6 @@
       <Association Name="PlantType_GardenBed" Member="PlantType" ThisKey="typeID" OtherKey="typeID" Type="PlantType" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.PlantTypes" Member="PlantTypes">
-    <Type Name="PlantType">
-      <Column Name="typeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="typeName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="PlantType_GardenBed" Member="GardenBeds" ThisKey="typeID" OtherKey="typeID" Type="GardenBed" />
-      <Association Name="PlantType_Threshold" Member="Threshold" ThisKey="typeID" OtherKey="typeID" Type="Threshold" Cardinality="One" />
-    </Type>
-  </Table>
   <Table Name="dbo.Schedule" Member="Schedules">
     <Type Name="Schedule">
       <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -79,6 +71,21 @@
       <Column Name="lowestMoisture" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="highestMoisture" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="PlantType_Threshold" Member="PlantType" ThisKey="typeID" OtherKey="typeID" Type="PlantType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PlantTypes" Member="PlantTypes">
+    <Type Name="PlantType">
+      <Column Name="typeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="typeName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="cycle" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="recWaterPerDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="recFertilizerPerMonth" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="lowestTemp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="highestTemp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="lowestMoisture" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="highestMoisture" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="PlantType_GardenBed" Member="GardenBeds" ThisKey="typeID" OtherKey="typeID" Type="GardenBed" />
+      <Association Name="PlantType_Threshold" Member="Threshold" ThisKey="typeID" OtherKey="typeID" Type="Threshold" Cardinality="One" />
     </Type>
   </Table>
 </Database>
