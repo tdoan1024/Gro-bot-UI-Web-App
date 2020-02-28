@@ -12,8 +12,9 @@
     <meta name="viewport" content="width=device-width" />
     <title>Manage Your Garden</title>
 
-    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
-    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/FirebaseScript.js"></script>
+    @*<link href="~/Content/" rel="stylesheet" />*@
     <style>
         #dest {
             animation-duration: 3s;
@@ -145,53 +146,37 @@
         <input type="text" id="mobile">
         <input type="text" id="email">
 
-        <button type="button" id="button" onclick="addLead()">Submit</button>
+        <button type="button" id="button">Submit</button>
 
     </form>
     <hr />
 
     @section scripts
     {
-
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
 
-        <!-- TODO: Add SDKs for Firebase products that you want to use
-        https://firebase.google.com/docs/web/setup#available-libraries -->
         <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
 
-
-        <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
         <script type="text/javascript">
-            // Your web app's Firebase configuration
-            var firebaseConfig = {
-                apiKey: "AIzaSyDyfux6x3mSdLAdN4iUKwY3hbwVQgcJzkc",
-                authDomain: "grobot-senior-project.firebaseapp.com",
-                databaseURL: "https://grobot-senior-project.firebaseio.com",
-                projectId: "grobot-senior-project",
-                storageBucket: "grobot-senior-project.appspot.com",
-                messagingSenderId: "4861335288",
-                appId: "1:4861335288:web:4a693f13f1a51e62b78d0d",
-                measurementId: "G-M5TGYRGJ4X"
-            };
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-            firebase.analytics();
-            var database = firebase.database();
 
-            function addLead() {
+            //var database = firebase.database;
+            $('#button').click(function () {
                 var clientName = document.getElementById('name').value;
                 var clientMobile = document.getElementById('mobile').value;
                 var clientEmail = document.getElementById('email').value;
 
-                var newClientKey = database.ref().child('leads').push().key;
-                database.ref('MyGarden/'+newClientKey+'/name').set(clientName);
-                database.ref('MyGarden/'+newClientKey+'/mobile').set(clientMobile);
-                database.ref('MyGarden/' + newClientKey + '/email').set(clientEmail);
+                firebase.database.ref('https://grobot-senior-project.firebaseio.com/MyGarden/name').set(clientName);
+                firebase.database.ref('https://grobot-senior-project.firebaseio.com/MyGarden/mobile').set(clientMobile);
+                firebase.database.ref('https://grobot-senior-project.firebaseio.com/MyGarden/email').set(clientEmail);
                 alert("Hey")
 
+                //var firebaseClient = new FirebaseClient("https://grobot-senior-project.firebaseio.com");
+                //var result = await firebaseClient
+                //    .Child("Data/Test")
+                //    .PostAsync(clientName);
+
                 reloadPage();
-            }
+            });
 
             function reloadPage() {
                 var locPage = "/Grobot/ManageGarden";

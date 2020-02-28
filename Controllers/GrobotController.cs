@@ -61,10 +61,10 @@ namespace Gro_bot.Controllers
         {
             var myModel = TempData["myModel"] as Garden ?? new Garden
             {
-
+                
             };
 
-            return View(myModel);
+            return View();
         }
     }
 }
