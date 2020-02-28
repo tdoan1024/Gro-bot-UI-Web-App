@@ -1,0 +1,289 @@
+﻿@model Gro_bot.Models.Garden
+
+@{
+    ViewBag.Title = "Create Garden";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Create New Garden</title>
+
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <style>
+        #dest {
+            animation-duration: 3s;
+        }
+
+        .SlowAnimation {
+            animation-duration: 3s;
+        }
+
+        .chartArea {
+            width: 75px;
+            height: 75px;
+        }
+
+        .sheen20 {
+            background-color: blue;
+            color: lawngreen;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .sheen5 {
+            background-color: lawngreen;
+            color: blue;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .sheenNone {
+            background-color: darkgrey;
+            color: white;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .schedule {
+            font-size: 12px;
+        }
+
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .customDropDown {
+            z-index: 100;
+        }
+
+        .modal-lg-wider {
+            width: 70%;
+        }
+
+        .main {
+            margin-right: 50px;
+        }
+ 
+        .Green{
+            background-color: #3be26a;
+            color:white;
+        }
+ 
+        .GreenText {
+            color: #3be26a;
+        }
+ 
+        .Red{
+            background-color: #f70919;
+            color:white;
+        }
+ 
+        .RedText {
+            color: #f70919;
+        }
+ 
+        .DashboardTitles {
+            background-color: #707372;
+            color: white;
+        
+        }
+ 
+        .breakoutTotal {
+            background-color: lightgray;
+            color: black;
+            border-color: #707372 !important;
+        }
+ 
+        .panel-default > .panel-heading {
+            color: white;
+            background-color: #707372;
+            border-color: #ddd;
+        }
+ 
+        .canvasSize {
+            height: 350px;
+        }
+ 
+        .yearlyTotals {
+            border-color: #707372 !important;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!--Modal to add new tool-->
+    <div class="modal fade" id="myCyclesModal" style="z-index:299999;" tabindex="-1" role="dialog" aria-labelledby="myCyclesModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myCyclesModalLabel">Tool Cycle Tracking</h4>
+                </div>
+                <div class="modal-body well-sm">
+                    <div id="stuffToolUI">put stuff here</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>New Garden</h2>
+    <hr />
+
+    <!--Form to input tool's field values, the field list is different for different types-->
+    <form id="CreateGardenForm" @*style="margin-left: 2em"*@ autocomplete="off">
+
+
+        <div class="row">
+            <!--Drop down list of tool types-->
+            <div class="col-lg-2">
+                <label>Type of Plant</label>
+            </div>
+            <div class="col-lg-4">
+                @Html.DropDownListFor(m => m.plantTypeID, new SelectList(Model._PlantTypeList, "plantTypeID", "plantTypeName"), "Select type of plant", new { @class = "form-control" })
+                @*<div class="form-inline">
+                        <input type="text" name="newPlantType" class="form-control" placeholder="Add New Plant Type..."/>
+                        <button class="btn btn-primary" id="AddTypeBtn">Save</button>
+                    </div>*@
+
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Bed Name</label>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" placeholder="Enter Bed Name" />
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Bed Dimension (inch)</label>
+            </div>
+
+            <div class="col-lg-2">
+                <input type="text" class="form-control" placeholder="Length" />
+            </div>
+            <div class="col-lg-2">
+                <input type="text" class="form-control" placeholder="Width" />
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Cycle (days)</label>
+            </div>
+            <div class="col-lg-4">
+                <span class="form-control">@Model.plantTypeCycle</span>
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-2">
+                <label>How often to water? (daily)</label>
+            </div>
+            <div class="col-lg-4">
+                <input class="form-control" value="@Model.plantTypeRecWaterSchedule (Recommended)" />
+            </div>
+            <div class="col-lg-2">
+                <label>Time(s)/day</label>
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-2">
+                <label>How often to fertilize? (monthly)</label>
+            </div>
+            <div class="col-lg-4">
+                <span class="form-control" contenteditable="true">@Model.plantTypeRecFertSchedule (Recommended)</span>
+                <span>Time(s)</span>
+            </div>
+            <div class="col-lg-2">
+                <label>Time(s)/month</label>
+            </div>
+
+        </div>
+        <hr />
+
+        <button type="button" class="btn btn-success" id="CreateNewGarden">Submit</button>
+        <button type="button" class="btn btn-danger" id="CancelNewGarden">Cancel</button>
+
+    </form>
+    <hr />
+
+    @section scripts
+    {
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyDyfux6x3mSdLAdN4iUKwY3hbwVQgcJzkc",
+                authDomain: "grobot-senior-project.firebaseapp.com",
+                databaseURL: "https://grobot-senior-project.firebaseio.com",
+                projectId: "grobot-senior-project",
+                storageBucket: "grobot-senior-project.appspot.com",
+                messagingSenderId: "4861335288",
+                appId: "1:4861335288:web:4a693f13f1a51e62b78d0d",
+                measurementId: "G-M5TGYRGJ4X"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+        </script>
+
+
+        <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript">
+            $('#CreateNewGarden').click(function () {
+                confirm('Please make sure you have filled in the seeds of your choice!')
+            })
+
+            function reloadPage(plantTypeID) {
+                var locPage = "/Grobot/CreateGarden";
+
+                if (plantTypeID != '0' && plantTypeID != '') {
+                    locPage += "?plantTypeID=" + plantTypeID;
+                }
+                window.location.href = locPage;
+            }
+
+            $('#plantTypeID').change(function () {
+                reloadPage($(this).val());
+            })
+
+            $(document).ready(function () {
+
+            })
+        </script>
+
+
+    }
+
+</body>
+</html>
+
+
+

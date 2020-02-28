@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="grobot" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=97.126.102.150,50612;Initial Catalog=grobot;Persist Security Info=True;User ID=TestLog" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="grobotConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AttributeTypes" Member="AttributeTypes">
+    <Type Name="AttributeType">
+      <Column Name="attID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="attCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="AttributeType_BedFeatureValue" Member="BedFeatureValues" ThisKey="attID" OtherKey="attID" Type="BedFeatureValue" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BedFeatureValues" Member="BedFeatureValues">
+    <Type Name="BedFeatureValue">
+      <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ftID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="attID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="AttributeType_BedFeatureValue" Member="AttributeType" ThisKey="attID" OtherKey="attID" Type="AttributeType" IsForeignKey="true" />
+      <Association Name="Feature_BedFeatureValue" Member="Feature" ThisKey="ftID" OtherKey="ftID" Type="Feature" IsForeignKey="true" />
+      <Association Name="GardenBed_BedFeatureValue" Member="GardenBed" ThisKey="bedID" OtherKey="bedID" Type="GardenBed" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BedInfoParameters" Member="BedInfoParameters">
+    <Type Name="BedInfoParameter">
+      <Column Name="bedParamID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="bedParamName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="BedInfoParameter_BedParamValue" Member="BedParamValues" ThisKey="bedParamID" OtherKey="bedParamID" Type="BedParamValue" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BedParamValues" Member="BedParamValues">
+    <Type Name="BedParamValue">
+      <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="bedParamID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="bedParamValue" Member="bedParamValue1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="BedInfoParameter_BedParamValue" Member="BedInfoParameter" ThisKey="bedParamID" OtherKey="bedParamID" Type="BedInfoParameter" IsForeignKey="true" />
+      <Association Name="GardenBed_BedParamValue" Member="GardenBed" ThisKey="bedID" OtherKey="bedID" Type="GardenBed" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Features" Member="Features">
+    <Type Name="Feature">
+      <Column Name="ftID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ftName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Feature_BedFeatureValue" Member="BedFeatureValues" ThisKey="ftID" OtherKey="ftID" Type="BedFeatureValue" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GardenBeds" Member="GardenBeds">
+    <Type Name="GardenBed">
+      <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="bedName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="typeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="GardenBed_BedFeatureValue" Member="BedFeatureValues" ThisKey="bedID" OtherKey="bedID" Type="BedFeatureValue" />
+      <Association Name="GardenBed_BedParamValue" Member="BedParamValues" ThisKey="bedID" OtherKey="bedID" Type="BedParamValue" />
+      <Association Name="GardenBed_Schedule" Member="Schedule" ThisKey="bedID" OtherKey="bedID" Type="Schedule" Cardinality="One" />
+      <Association Name="PlantType_GardenBed" Member="PlantType" ThisKey="typeID" OtherKey="typeID" Type="PlantType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Schedule" Member="Schedules">
+    <Type Name="Schedule">
+      <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="waterTimes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="water1" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="water2" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="water3" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="fertilizer1" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Association Name="GardenBed_Schedule" Member="GardenBed" ThisKey="bedID" OtherKey="bedID" Type="GardenBed" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Threshold" Member="Thresholds">
+    <Type Name="Threshold">
+      <Column Name="typeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="lowestTemp" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="highestTemp" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="lowestMoisture" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="highestMoisture" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PlantType_Threshold" Member="PlantType" ThisKey="typeID" OtherKey="typeID" Type="PlantType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PlantTypes" Member="PlantTypes">
+    <Type Name="PlantType">
+      <Column Name="typeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="typeName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="cycle" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="recWaterPerDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="recFertilizerPerMonth" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="lowestTemp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="highestTemp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="lowestMoisture" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="highestMoisture" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="PlantType_GardenBed" Member="GardenBeds" ThisKey="typeID" OtherKey="typeID" Type="GardenBed" />
+      <Association Name="PlantType_Threshold" Member="Threshold" ThisKey="typeID" OtherKey="typeID" Type="Threshold" Cardinality="One" />
+    </Type>
+  </Table>
+</Database>
