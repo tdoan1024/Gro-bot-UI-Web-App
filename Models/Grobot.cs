@@ -28,6 +28,24 @@ namespace Gro_bot.Models
 
     }
 
+    public class ExistingGarden
+    {
+        public int? gardenID { get; set; }
+        public string gardenName { get; set; }
+        public int plantTypeID { get; set; }
+        public string plantTypeName { get; set; }
+        public string plantTypeCycle { get; set; }
+        public int? currentDay { get; set; }
+        public double progress { get; set; }
+        public int light { get; set; }
+        public int moisture { get; set; }
+        public int temperature { get; set; }
+        public int? lowestTemp { get; set; }
+        public int? highestTemp { get; set; }
+        public string lowestMoisture { get; set; }
+        public string highestMoisture { get; set; }
+    }
+
     public class PlantTypeObj
     {
         public int plantTypeID { get; set; }

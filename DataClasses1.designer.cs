@@ -30,33 +30,15 @@ namespace Gro_bot
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertAttributeType(AttributeType instance);
-    partial void UpdateAttributeType(AttributeType instance);
-    partial void DeleteAttributeType(AttributeType instance);
-    partial void InsertBedFeatureValue(BedFeatureValue instance);
-    partial void UpdateBedFeatureValue(BedFeatureValue instance);
-    partial void DeleteBedFeatureValue(BedFeatureValue instance);
-    partial void InsertBedInfoParameter(BedInfoParameter instance);
-    partial void UpdateBedInfoParameter(BedInfoParameter instance);
-    partial void DeleteBedInfoParameter(BedInfoParameter instance);
-    partial void InsertBedParamValue(BedParamValue instance);
-    partial void UpdateBedParamValue(BedParamValue instance);
-    partial void DeleteBedParamValue(BedParamValue instance);
-    partial void InsertFeature(Feature instance);
-    partial void UpdateFeature(Feature instance);
-    partial void DeleteFeature(Feature instance);
     partial void InsertGardenBed(GardenBed instance);
     partial void UpdateGardenBed(GardenBed instance);
     partial void DeleteGardenBed(GardenBed instance);
-    partial void InsertSchedule(Schedule instance);
-    partial void UpdateSchedule(Schedule instance);
-    partial void DeleteSchedule(Schedule instance);
-    partial void InsertThreshold(Threshold instance);
-    partial void UpdateThreshold(Threshold instance);
-    partial void DeleteThreshold(Threshold instance);
     partial void InsertPlantType(PlantType instance);
     partial void UpdatePlantType(PlantType instance);
     partial void DeletePlantType(PlantType instance);
+    partial void InsertBedFeedbackValue(BedFeedbackValue instance);
+    partial void UpdateBedFeedbackValue(BedFeedbackValue instance);
+    partial void DeleteBedFeedbackValue(BedFeedbackValue instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -89,67 +71,11 @@ namespace Gro_bot
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<AttributeType> AttributeTypes
-		{
-			get
-			{
-				return this.GetTable<AttributeType>();
-			}
-		}
-		
-		public System.Data.Linq.Table<BedFeatureValue> BedFeatureValues
-		{
-			get
-			{
-				return this.GetTable<BedFeatureValue>();
-			}
-		}
-		
-		public System.Data.Linq.Table<BedInfoParameter> BedInfoParameters
-		{
-			get
-			{
-				return this.GetTable<BedInfoParameter>();
-			}
-		}
-		
-		public System.Data.Linq.Table<BedParamValue> BedParamValues
-		{
-			get
-			{
-				return this.GetTable<BedParamValue>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Feature> Features
-		{
-			get
-			{
-				return this.GetTable<Feature>();
-			}
-		}
-		
 		public System.Data.Linq.Table<GardenBed> GardenBeds
 		{
 			get
 			{
 				return this.GetTable<GardenBed>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Schedule> Schedules
-		{
-			get
-			{
-				return this.GetTable<Schedule>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Threshold> Thresholds
-		{
-			get
-			{
-				return this.GetTable<Threshold>();
 			}
 		}
 		
@@ -160,796 +86,13 @@ namespace Gro_bot
 				return this.GetTable<PlantType>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AttributeTypes")]
-	public partial class AttributeType : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _attID;
-		
-		private string _attCode;
-		
-		private EntitySet<BedFeatureValue> _BedFeatureValues;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnattIDChanging(int value);
-    partial void OnattIDChanged();
-    partial void OnattCodeChanging(string value);
-    partial void OnattCodeChanged();
-    #endregion
-		
-		public AttributeType()
-		{
-			this._BedFeatureValues = new EntitySet<BedFeatureValue>(new Action<BedFeatureValue>(this.attach_BedFeatureValues), new Action<BedFeatureValue>(this.detach_BedFeatureValues));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_attID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int attID
+		public System.Data.Linq.Table<BedFeedbackValue> BedFeedbackValues
 		{
 			get
 			{
-				return this._attID;
+				return this.GetTable<BedFeedbackValue>();
 			}
-			set
-			{
-				if ((this._attID != value))
-				{
-					this.OnattIDChanging(value);
-					this.SendPropertyChanging();
-					this._attID = value;
-					this.SendPropertyChanged("attID");
-					this.OnattIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_attCode", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string attCode
-		{
-			get
-			{
-				return this._attCode;
-			}
-			set
-			{
-				if ((this._attCode != value))
-				{
-					this.OnattCodeChanging(value);
-					this.SendPropertyChanging();
-					this._attCode = value;
-					this.SendPropertyChanged("attCode");
-					this.OnattCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AttributeType_BedFeatureValue", Storage="_BedFeatureValues", ThisKey="attID", OtherKey="attID")]
-		public EntitySet<BedFeatureValue> BedFeatureValues
-		{
-			get
-			{
-				return this._BedFeatureValues;
-			}
-			set
-			{
-				this._BedFeatureValues.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_BedFeatureValues(BedFeatureValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.AttributeType = this;
-		}
-		
-		private void detach_BedFeatureValues(BedFeatureValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.AttributeType = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BedFeatureValues")]
-	public partial class BedFeatureValue : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _bedID;
-		
-		private int _ftID;
-		
-		private int _attID;
-		
-		private string _value;
-		
-		private EntityRef<AttributeType> _AttributeType;
-		
-		private EntityRef<Feature> _Feature;
-		
-		private EntityRef<GardenBed> _GardenBed;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnbedIDChanging(int value);
-    partial void OnbedIDChanged();
-    partial void OnftIDChanging(int value);
-    partial void OnftIDChanged();
-    partial void OnattIDChanging(int value);
-    partial void OnattIDChanged();
-    partial void OnvalueChanging(string value);
-    partial void OnvalueChanged();
-    #endregion
-		
-		public BedFeatureValue()
-		{
-			this._AttributeType = default(EntityRef<AttributeType>);
-			this._Feature = default(EntityRef<Feature>);
-			this._GardenBed = default(EntityRef<GardenBed>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int bedID
-		{
-			get
-			{
-				return this._bedID;
-			}
-			set
-			{
-				if ((this._bedID != value))
-				{
-					if (this._GardenBed.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnbedIDChanging(value);
-					this.SendPropertyChanging();
-					this._bedID = value;
-					this.SendPropertyChanged("bedID");
-					this.OnbedIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ftID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ftID
-		{
-			get
-			{
-				return this._ftID;
-			}
-			set
-			{
-				if ((this._ftID != value))
-				{
-					if (this._Feature.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnftIDChanging(value);
-					this.SendPropertyChanging();
-					this._ftID = value;
-					this.SendPropertyChanged("ftID");
-					this.OnftIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_attID", DbType="Int NOT NULL")]
-		public int attID
-		{
-			get
-			{
-				return this._attID;
-			}
-			set
-			{
-				if ((this._attID != value))
-				{
-					if (this._AttributeType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnattIDChanging(value);
-					this.SendPropertyChanging();
-					this._attID = value;
-					this.SendPropertyChanged("attID");
-					this.OnattIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_value", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string value
-		{
-			get
-			{
-				return this._value;
-			}
-			set
-			{
-				if ((this._value != value))
-				{
-					this.OnvalueChanging(value);
-					this.SendPropertyChanging();
-					this._value = value;
-					this.SendPropertyChanged("value");
-					this.OnvalueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AttributeType_BedFeatureValue", Storage="_AttributeType", ThisKey="attID", OtherKey="attID", IsForeignKey=true)]
-		public AttributeType AttributeType
-		{
-			get
-			{
-				return this._AttributeType.Entity;
-			}
-			set
-			{
-				AttributeType previousValue = this._AttributeType.Entity;
-				if (((previousValue != value) 
-							|| (this._AttributeType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._AttributeType.Entity = null;
-						previousValue.BedFeatureValues.Remove(this);
-					}
-					this._AttributeType.Entity = value;
-					if ((value != null))
-					{
-						value.BedFeatureValues.Add(this);
-						this._attID = value.attID;
-					}
-					else
-					{
-						this._attID = default(int);
-					}
-					this.SendPropertyChanged("AttributeType");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Feature_BedFeatureValue", Storage="_Feature", ThisKey="ftID", OtherKey="ftID", IsForeignKey=true)]
-		public Feature Feature
-		{
-			get
-			{
-				return this._Feature.Entity;
-			}
-			set
-			{
-				Feature previousValue = this._Feature.Entity;
-				if (((previousValue != value) 
-							|| (this._Feature.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Feature.Entity = null;
-						previousValue.BedFeatureValues.Remove(this);
-					}
-					this._Feature.Entity = value;
-					if ((value != null))
-					{
-						value.BedFeatureValues.Add(this);
-						this._ftID = value.ftID;
-					}
-					else
-					{
-						this._ftID = default(int);
-					}
-					this.SendPropertyChanged("Feature");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_BedFeatureValue", Storage="_GardenBed", ThisKey="bedID", OtherKey="bedID", IsForeignKey=true)]
-		public GardenBed GardenBed
-		{
-			get
-			{
-				return this._GardenBed.Entity;
-			}
-			set
-			{
-				GardenBed previousValue = this._GardenBed.Entity;
-				if (((previousValue != value) 
-							|| (this._GardenBed.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._GardenBed.Entity = null;
-						previousValue.BedFeatureValues.Remove(this);
-					}
-					this._GardenBed.Entity = value;
-					if ((value != null))
-					{
-						value.BedFeatureValues.Add(this);
-						this._bedID = value.bedID;
-					}
-					else
-					{
-						this._bedID = default(int);
-					}
-					this.SendPropertyChanged("GardenBed");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BedInfoParameters")]
-	public partial class BedInfoParameter : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _bedParamID;
-		
-		private string _bedParamName;
-		
-		private EntitySet<BedParamValue> _BedParamValues;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnbedParamIDChanging(int value);
-    partial void OnbedParamIDChanged();
-    partial void OnbedParamNameChanging(string value);
-    partial void OnbedParamNameChanged();
-    #endregion
-		
-		public BedInfoParameter()
-		{
-			this._BedParamValues = new EntitySet<BedParamValue>(new Action<BedParamValue>(this.attach_BedParamValues), new Action<BedParamValue>(this.detach_BedParamValues));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedParamID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int bedParamID
-		{
-			get
-			{
-				return this._bedParamID;
-			}
-			set
-			{
-				if ((this._bedParamID != value))
-				{
-					this.OnbedParamIDChanging(value);
-					this.SendPropertyChanging();
-					this._bedParamID = value;
-					this.SendPropertyChanged("bedParamID");
-					this.OnbedParamIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedParamName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string bedParamName
-		{
-			get
-			{
-				return this._bedParamName;
-			}
-			set
-			{
-				if ((this._bedParamName != value))
-				{
-					this.OnbedParamNameChanging(value);
-					this.SendPropertyChanging();
-					this._bedParamName = value;
-					this.SendPropertyChanged("bedParamName");
-					this.OnbedParamNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BedInfoParameter_BedParamValue", Storage="_BedParamValues", ThisKey="bedParamID", OtherKey="bedParamID")]
-		public EntitySet<BedParamValue> BedParamValues
-		{
-			get
-			{
-				return this._BedParamValues;
-			}
-			set
-			{
-				this._BedParamValues.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_BedParamValues(BedParamValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.BedInfoParameter = this;
-		}
-		
-		private void detach_BedParamValues(BedParamValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.BedInfoParameter = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BedParamValues")]
-	public partial class BedParamValue : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _bedID;
-		
-		private int _bedParamID;
-		
-		private string _bedParamValue1;
-		
-		private EntityRef<BedInfoParameter> _BedInfoParameter;
-		
-		private EntityRef<GardenBed> _GardenBed;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnbedIDChanging(int value);
-    partial void OnbedIDChanged();
-    partial void OnbedParamIDChanging(int value);
-    partial void OnbedParamIDChanged();
-    partial void OnbedParamValue1Changing(string value);
-    partial void OnbedParamValue1Changed();
-    #endregion
-		
-		public BedParamValue()
-		{
-			this._BedInfoParameter = default(EntityRef<BedInfoParameter>);
-			this._GardenBed = default(EntityRef<GardenBed>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int bedID
-		{
-			get
-			{
-				return this._bedID;
-			}
-			set
-			{
-				if ((this._bedID != value))
-				{
-					if (this._GardenBed.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnbedIDChanging(value);
-					this.SendPropertyChanging();
-					this._bedID = value;
-					this.SendPropertyChanged("bedID");
-					this.OnbedIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedParamID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int bedParamID
-		{
-			get
-			{
-				return this._bedParamID;
-			}
-			set
-			{
-				if ((this._bedParamID != value))
-				{
-					if (this._BedInfoParameter.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnbedParamIDChanging(value);
-					this.SendPropertyChanging();
-					this._bedParamID = value;
-					this.SendPropertyChanged("bedParamID");
-					this.OnbedParamIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="bedParamValue", Storage="_bedParamValue1", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string bedParamValue1
-		{
-			get
-			{
-				return this._bedParamValue1;
-			}
-			set
-			{
-				if ((this._bedParamValue1 != value))
-				{
-					this.OnbedParamValue1Changing(value);
-					this.SendPropertyChanging();
-					this._bedParamValue1 = value;
-					this.SendPropertyChanged("bedParamValue1");
-					this.OnbedParamValue1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BedInfoParameter_BedParamValue", Storage="_BedInfoParameter", ThisKey="bedParamID", OtherKey="bedParamID", IsForeignKey=true)]
-		public BedInfoParameter BedInfoParameter
-		{
-			get
-			{
-				return this._BedInfoParameter.Entity;
-			}
-			set
-			{
-				BedInfoParameter previousValue = this._BedInfoParameter.Entity;
-				if (((previousValue != value) 
-							|| (this._BedInfoParameter.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BedInfoParameter.Entity = null;
-						previousValue.BedParamValues.Remove(this);
-					}
-					this._BedInfoParameter.Entity = value;
-					if ((value != null))
-					{
-						value.BedParamValues.Add(this);
-						this._bedParamID = value.bedParamID;
-					}
-					else
-					{
-						this._bedParamID = default(int);
-					}
-					this.SendPropertyChanged("BedInfoParameter");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_BedParamValue", Storage="_GardenBed", ThisKey="bedID", OtherKey="bedID", IsForeignKey=true)]
-		public GardenBed GardenBed
-		{
-			get
-			{
-				return this._GardenBed.Entity;
-			}
-			set
-			{
-				GardenBed previousValue = this._GardenBed.Entity;
-				if (((previousValue != value) 
-							|| (this._GardenBed.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._GardenBed.Entity = null;
-						previousValue.BedParamValues.Remove(this);
-					}
-					this._GardenBed.Entity = value;
-					if ((value != null))
-					{
-						value.BedParamValues.Add(this);
-						this._bedID = value.bedID;
-					}
-					else
-					{
-						this._bedID = default(int);
-					}
-					this.SendPropertyChanged("GardenBed");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Features")]
-	public partial class Feature : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ftID;
-		
-		private string _ftName;
-		
-		private EntitySet<BedFeatureValue> _BedFeatureValues;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnftIDChanging(int value);
-    partial void OnftIDChanged();
-    partial void OnftNameChanging(string value);
-    partial void OnftNameChanged();
-    #endregion
-		
-		public Feature()
-		{
-			this._BedFeatureValues = new EntitySet<BedFeatureValue>(new Action<BedFeatureValue>(this.attach_BedFeatureValues), new Action<BedFeatureValue>(this.detach_BedFeatureValues));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ftID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ftID
-		{
-			get
-			{
-				return this._ftID;
-			}
-			set
-			{
-				if ((this._ftID != value))
-				{
-					this.OnftIDChanging(value);
-					this.SendPropertyChanging();
-					this._ftID = value;
-					this.SendPropertyChanged("ftID");
-					this.OnftIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ftName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string ftName
-		{
-			get
-			{
-				return this._ftName;
-			}
-			set
-			{
-				if ((this._ftName != value))
-				{
-					this.OnftNameChanging(value);
-					this.SendPropertyChanging();
-					this._ftName = value;
-					this.SendPropertyChanged("ftName");
-					this.OnftNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Feature_BedFeatureValue", Storage="_BedFeatureValues", ThisKey="ftID", OtherKey="ftID")]
-		public EntitySet<BedFeatureValue> BedFeatureValues
-		{
-			get
-			{
-				return this._BedFeatureValues;
-			}
-			set
-			{
-				this._BedFeatureValues.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_BedFeatureValues(BedFeatureValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.Feature = this;
-		}
-		
-		private void detach_BedFeatureValues(BedFeatureValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.Feature = null;
 		}
 	}
 	
@@ -965,11 +108,11 @@ namespace Gro_bot
 		
 		private int _typeID;
 		
-		private EntitySet<BedFeatureValue> _BedFeatureValues;
+		private System.Nullable<int> _length;
 		
-		private EntitySet<BedParamValue> _BedParamValues;
+		private System.Nullable<int> _width;
 		
-		private EntityRef<Schedule> _Schedule;
+		private EntityRef<BedFeedbackValue> _BedFeedbackValue;
 		
 		private EntityRef<PlantType> _PlantType;
 		
@@ -983,13 +126,15 @@ namespace Gro_bot
     partial void OnbedNameChanged();
     partial void OntypeIDChanging(int value);
     partial void OntypeIDChanged();
+    partial void OnlengthChanging(System.Nullable<int> value);
+    partial void OnlengthChanged();
+    partial void OnwidthChanging(System.Nullable<int> value);
+    partial void OnwidthChanged();
     #endregion
 		
 		public GardenBed()
 		{
-			this._BedFeatureValues = new EntitySet<BedFeatureValue>(new Action<BedFeatureValue>(this.attach_BedFeatureValues), new Action<BedFeatureValue>(this.detach_BedFeatureValues));
-			this._BedParamValues = new EntitySet<BedParamValue>(new Action<BedParamValue>(this.attach_BedParamValues), new Action<BedParamValue>(this.detach_BedParamValues));
-			this._Schedule = default(EntityRef<Schedule>);
+			this._BedFeedbackValue = default(EntityRef<BedFeedbackValue>);
 			this._PlantType = default(EntityRef<PlantType>);
 			OnCreated();
 		}
@@ -1058,57 +203,71 @@ namespace Gro_bot
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_BedFeatureValue", Storage="_BedFeatureValues", ThisKey="bedID", OtherKey="bedID")]
-		public EntitySet<BedFeatureValue> BedFeatureValues
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_length", DbType="Int")]
+		public System.Nullable<int> length
 		{
 			get
 			{
-				return this._BedFeatureValues;
+				return this._length;
 			}
 			set
 			{
-				this._BedFeatureValues.Assign(value);
+				if ((this._length != value))
+				{
+					this.OnlengthChanging(value);
+					this.SendPropertyChanging();
+					this._length = value;
+					this.SendPropertyChanged("length");
+					this.OnlengthChanged();
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_BedParamValue", Storage="_BedParamValues", ThisKey="bedID", OtherKey="bedID")]
-		public EntitySet<BedParamValue> BedParamValues
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_width", DbType="Int")]
+		public System.Nullable<int> width
 		{
 			get
 			{
-				return this._BedParamValues;
+				return this._width;
 			}
 			set
 			{
-				this._BedParamValues.Assign(value);
+				if ((this._width != value))
+				{
+					this.OnwidthChanging(value);
+					this.SendPropertyChanging();
+					this._width = value;
+					this.SendPropertyChanged("width");
+					this.OnwidthChanged();
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_Schedule", Storage="_Schedule", ThisKey="bedID", OtherKey="bedID", IsUnique=true, IsForeignKey=false)]
-		public Schedule Schedule
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_BedFeedbackValue", Storage="_BedFeedbackValue", ThisKey="bedID", OtherKey="bedID", IsUnique=true, IsForeignKey=false)]
+		public BedFeedbackValue BedFeedbackValue
 		{
 			get
 			{
-				return this._Schedule.Entity;
+				return this._BedFeedbackValue.Entity;
 			}
 			set
 			{
-				Schedule previousValue = this._Schedule.Entity;
+				BedFeedbackValue previousValue = this._BedFeedbackValue.Entity;
 				if (((previousValue != value) 
-							|| (this._Schedule.HasLoadedOrAssignedValue == false)))
+							|| (this._BedFeedbackValue.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Schedule.Entity = null;
+						this._BedFeedbackValue.Entity = null;
 						previousValue.GardenBed = null;
 					}
-					this._Schedule.Entity = value;
+					this._BedFeedbackValue.Entity = value;
 					if ((value != null))
 					{
 						value.GardenBed = this;
 					}
-					this.SendPropertyChanged("Schedule");
+					this.SendPropertyChanged("BedFeedbackValue");
 				}
 			}
 		}
@@ -1136,452 +295,6 @@ namespace Gro_bot
 					if ((value != null))
 					{
 						value.GardenBeds.Add(this);
-						this._typeID = value.typeID;
-					}
-					else
-					{
-						this._typeID = default(int);
-					}
-					this.SendPropertyChanged("PlantType");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_BedFeatureValues(BedFeatureValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.GardenBed = this;
-		}
-		
-		private void detach_BedFeatureValues(BedFeatureValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.GardenBed = null;
-		}
-		
-		private void attach_BedParamValues(BedParamValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.GardenBed = this;
-		}
-		
-		private void detach_BedParamValues(BedParamValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.GardenBed = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Schedule")]
-	public partial class Schedule : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _bedID;
-		
-		private int _waterTimes;
-		
-		private System.TimeSpan _water1;
-		
-		private System.Nullable<System.TimeSpan> _water2;
-		
-		private System.Nullable<System.TimeSpan> _water3;
-		
-		private System.Nullable<System.TimeSpan> _fertilizer1;
-		
-		private EntityRef<GardenBed> _GardenBed;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnbedIDChanging(int value);
-    partial void OnbedIDChanged();
-    partial void OnwaterTimesChanging(int value);
-    partial void OnwaterTimesChanged();
-    partial void Onwater1Changing(System.TimeSpan value);
-    partial void Onwater1Changed();
-    partial void Onwater2Changing(System.Nullable<System.TimeSpan> value);
-    partial void Onwater2Changed();
-    partial void Onwater3Changing(System.Nullable<System.TimeSpan> value);
-    partial void Onwater3Changed();
-    partial void Onfertilizer1Changing(System.Nullable<System.TimeSpan> value);
-    partial void Onfertilizer1Changed();
-    #endregion
-		
-		public Schedule()
-		{
-			this._GardenBed = default(EntityRef<GardenBed>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int bedID
-		{
-			get
-			{
-				return this._bedID;
-			}
-			set
-			{
-				if ((this._bedID != value))
-				{
-					if (this._GardenBed.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnbedIDChanging(value);
-					this.SendPropertyChanging();
-					this._bedID = value;
-					this.SendPropertyChanged("bedID");
-					this.OnbedIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_waterTimes", DbType="Int NOT NULL")]
-		public int waterTimes
-		{
-			get
-			{
-				return this._waterTimes;
-			}
-			set
-			{
-				if ((this._waterTimes != value))
-				{
-					this.OnwaterTimesChanging(value);
-					this.SendPropertyChanging();
-					this._waterTimes = value;
-					this.SendPropertyChanged("waterTimes");
-					this.OnwaterTimesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_water1", DbType="Time NOT NULL")]
-		public System.TimeSpan water1
-		{
-			get
-			{
-				return this._water1;
-			}
-			set
-			{
-				if ((this._water1 != value))
-				{
-					this.Onwater1Changing(value);
-					this.SendPropertyChanging();
-					this._water1 = value;
-					this.SendPropertyChanged("water1");
-					this.Onwater1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_water2", DbType="Time")]
-		public System.Nullable<System.TimeSpan> water2
-		{
-			get
-			{
-				return this._water2;
-			}
-			set
-			{
-				if ((this._water2 != value))
-				{
-					this.Onwater2Changing(value);
-					this.SendPropertyChanging();
-					this._water2 = value;
-					this.SendPropertyChanged("water2");
-					this.Onwater2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_water3", DbType="Time")]
-		public System.Nullable<System.TimeSpan> water3
-		{
-			get
-			{
-				return this._water3;
-			}
-			set
-			{
-				if ((this._water3 != value))
-				{
-					this.Onwater3Changing(value);
-					this.SendPropertyChanging();
-					this._water3 = value;
-					this.SendPropertyChanged("water3");
-					this.Onwater3Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fertilizer1", DbType="Time")]
-		public System.Nullable<System.TimeSpan> fertilizer1
-		{
-			get
-			{
-				return this._fertilizer1;
-			}
-			set
-			{
-				if ((this._fertilizer1 != value))
-				{
-					this.Onfertilizer1Changing(value);
-					this.SendPropertyChanging();
-					this._fertilizer1 = value;
-					this.SendPropertyChanged("fertilizer1");
-					this.Onfertilizer1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_Schedule", Storage="_GardenBed", ThisKey="bedID", OtherKey="bedID", IsForeignKey=true)]
-		public GardenBed GardenBed
-		{
-			get
-			{
-				return this._GardenBed.Entity;
-			}
-			set
-			{
-				GardenBed previousValue = this._GardenBed.Entity;
-				if (((previousValue != value) 
-							|| (this._GardenBed.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._GardenBed.Entity = null;
-						previousValue.Schedule = null;
-					}
-					this._GardenBed.Entity = value;
-					if ((value != null))
-					{
-						value.Schedule = this;
-						this._bedID = value.bedID;
-					}
-					else
-					{
-						this._bedID = default(int);
-					}
-					this.SendPropertyChanged("GardenBed");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Threshold")]
-	public partial class Threshold : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _typeID;
-		
-		private int _lowestTemp;
-		
-		private int _highestTemp;
-		
-		private int _lowestMoisture;
-		
-		private int _highestMoisture;
-		
-		private EntityRef<PlantType> _PlantType;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OntypeIDChanging(int value);
-    partial void OntypeIDChanged();
-    partial void OnlowestTempChanging(int value);
-    partial void OnlowestTempChanged();
-    partial void OnhighestTempChanging(int value);
-    partial void OnhighestTempChanged();
-    partial void OnlowestMoistureChanging(int value);
-    partial void OnlowestMoistureChanged();
-    partial void OnhighestMoistureChanging(int value);
-    partial void OnhighestMoistureChanged();
-    #endregion
-		
-		public Threshold()
-		{
-			this._PlantType = default(EntityRef<PlantType>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_typeID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int typeID
-		{
-			get
-			{
-				return this._typeID;
-			}
-			set
-			{
-				if ((this._typeID != value))
-				{
-					if (this._PlantType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OntypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._typeID = value;
-					this.SendPropertyChanged("typeID");
-					this.OntypeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lowestTemp", DbType="Int NOT NULL")]
-		public int lowestTemp
-		{
-			get
-			{
-				return this._lowestTemp;
-			}
-			set
-			{
-				if ((this._lowestTemp != value))
-				{
-					this.OnlowestTempChanging(value);
-					this.SendPropertyChanging();
-					this._lowestTemp = value;
-					this.SendPropertyChanged("lowestTemp");
-					this.OnlowestTempChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_highestTemp", DbType="Int NOT NULL")]
-		public int highestTemp
-		{
-			get
-			{
-				return this._highestTemp;
-			}
-			set
-			{
-				if ((this._highestTemp != value))
-				{
-					this.OnhighestTempChanging(value);
-					this.SendPropertyChanging();
-					this._highestTemp = value;
-					this.SendPropertyChanged("highestTemp");
-					this.OnhighestTempChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lowestMoisture", DbType="Int NOT NULL")]
-		public int lowestMoisture
-		{
-			get
-			{
-				return this._lowestMoisture;
-			}
-			set
-			{
-				if ((this._lowestMoisture != value))
-				{
-					this.OnlowestMoistureChanging(value);
-					this.SendPropertyChanging();
-					this._lowestMoisture = value;
-					this.SendPropertyChanged("lowestMoisture");
-					this.OnlowestMoistureChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_highestMoisture", DbType="Int NOT NULL")]
-		public int highestMoisture
-		{
-			get
-			{
-				return this._highestMoisture;
-			}
-			set
-			{
-				if ((this._highestMoisture != value))
-				{
-					this.OnhighestMoistureChanging(value);
-					this.SendPropertyChanging();
-					this._highestMoisture = value;
-					this.SendPropertyChanged("highestMoisture");
-					this.OnhighestMoistureChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantType_Threshold", Storage="_PlantType", ThisKey="typeID", OtherKey="typeID", IsForeignKey=true)]
-		public PlantType PlantType
-		{
-			get
-			{
-				return this._PlantType.Entity;
-			}
-			set
-			{
-				PlantType previousValue = this._PlantType.Entity;
-				if (((previousValue != value) 
-							|| (this._PlantType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PlantType.Entity = null;
-						previousValue.Threshold = null;
-					}
-					this._PlantType.Entity = value;
-					if ((value != null))
-					{
-						value.Threshold = this;
 						this._typeID = value.typeID;
 					}
 					else
@@ -1640,8 +353,6 @@ namespace Gro_bot
 		
 		private EntitySet<GardenBed> _GardenBeds;
 		
-		private EntityRef<Threshold> _Threshold;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1669,7 +380,6 @@ namespace Gro_bot
 		public PlantType()
 		{
 			this._GardenBeds = new EntitySet<GardenBed>(new Action<GardenBed>(this.attach_GardenBeds), new Action<GardenBed>(this.detach_GardenBeds));
-			this._Threshold = default(EntityRef<Threshold>);
 			OnCreated();
 		}
 		
@@ -1866,35 +576,6 @@ namespace Gro_bot
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantType_Threshold", Storage="_Threshold", ThisKey="typeID", OtherKey="typeID", IsUnique=true, IsForeignKey=false)]
-		public Threshold Threshold
-		{
-			get
-			{
-				return this._Threshold.Entity;
-			}
-			set
-			{
-				Threshold previousValue = this._Threshold.Entity;
-				if (((previousValue != value) 
-							|| (this._Threshold.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Threshold.Entity = null;
-						previousValue.PlantType = null;
-					}
-					this._Threshold.Entity = value;
-					if ((value != null))
-					{
-						value.PlantType = this;
-					}
-					this.SendPropertyChanged("Threshold");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1925,6 +606,205 @@ namespace Gro_bot
 		{
 			this.SendPropertyChanging();
 			entity.PlantType = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BedFeedbackValues")]
+	public partial class BedFeedbackValue : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _bedID;
+		
+		private int _temperature;
+		
+		private int _moisture;
+		
+		private int _light;
+		
+		private System.Nullable<int> _currentDay;
+		
+		private EntityRef<GardenBed> _GardenBed;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnbedIDChanging(int value);
+    partial void OnbedIDChanged();
+    partial void OntemperatureChanging(int value);
+    partial void OntemperatureChanged();
+    partial void OnmoistureChanging(int value);
+    partial void OnmoistureChanged();
+    partial void OnlightChanging(int value);
+    partial void OnlightChanged();
+    partial void OncurrentDayChanging(System.Nullable<int> value);
+    partial void OncurrentDayChanged();
+    #endregion
+		
+		public BedFeedbackValue()
+		{
+			this._GardenBed = default(EntityRef<GardenBed>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int bedID
+		{
+			get
+			{
+				return this._bedID;
+			}
+			set
+			{
+				if ((this._bedID != value))
+				{
+					if (this._GardenBed.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnbedIDChanging(value);
+					this.SendPropertyChanging();
+					this._bedID = value;
+					this.SendPropertyChanged("bedID");
+					this.OnbedIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temperature", DbType="Int NOT NULL")]
+		public int temperature
+		{
+			get
+			{
+				return this._temperature;
+			}
+			set
+			{
+				if ((this._temperature != value))
+				{
+					this.OntemperatureChanging(value);
+					this.SendPropertyChanging();
+					this._temperature = value;
+					this.SendPropertyChanged("temperature");
+					this.OntemperatureChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_moisture", DbType="Int NOT NULL")]
+		public int moisture
+		{
+			get
+			{
+				return this._moisture;
+			}
+			set
+			{
+				if ((this._moisture != value))
+				{
+					this.OnmoistureChanging(value);
+					this.SendPropertyChanging();
+					this._moisture = value;
+					this.SendPropertyChanged("moisture");
+					this.OnmoistureChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_light", DbType="Int NOT NULL")]
+		public int light
+		{
+			get
+			{
+				return this._light;
+			}
+			set
+			{
+				if ((this._light != value))
+				{
+					this.OnlightChanging(value);
+					this.SendPropertyChanging();
+					this._light = value;
+					this.SendPropertyChanged("light");
+					this.OnlightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_currentDay", DbType="Int")]
+		public System.Nullable<int> currentDay
+		{
+			get
+			{
+				return this._currentDay;
+			}
+			set
+			{
+				if ((this._currentDay != value))
+				{
+					this.OncurrentDayChanging(value);
+					this.SendPropertyChanging();
+					this._currentDay = value;
+					this.SendPropertyChanged("currentDay");
+					this.OncurrentDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_BedFeedbackValue", Storage="_GardenBed", ThisKey="bedID", OtherKey="bedID", IsForeignKey=true)]
+		public GardenBed GardenBed
+		{
+			get
+			{
+				return this._GardenBed.Entity;
+			}
+			set
+			{
+				GardenBed previousValue = this._GardenBed.Entity;
+				if (((previousValue != value) 
+							|| (this._GardenBed.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._GardenBed.Entity = null;
+						previousValue.BedFeedbackValue = null;
+					}
+					this._GardenBed.Entity = value;
+					if ((value != null))
+					{
+						value.BedFeedbackValue = this;
+						this._bedID = value.bedID;
+					}
+					else
+					{
+						this._bedID = default(int);
+					}
+					this.SendPropertyChanged("GardenBed");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

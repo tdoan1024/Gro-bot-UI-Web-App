@@ -1,4 +1,4 @@
-﻿@model Gro_bot.Models.Garden
+﻿@model Gro_bot.Models.ExistingGarden
 
 @{
     ViewBag.Title = "Manage Garden";
@@ -10,67 +10,14 @@
 <head>
 
     <meta name="viewport" content="width=device-width" />
-    <title>Manage Your Garden</title>
+    <title>Your Garden Health</title>
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/FirebaseScript.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     @*<link href="~/Content/" rel="stylesheet" />*@
     <style>
-        #dest {
-            animation-duration: 3s;
-        }
 
-        .SlowAnimation {
-            animation-duration: 3s;
-        }
-
-        .chartArea {
-            width: 75px;
-            height: 75px;
-        }
-
-        .sheen20 {
-            background-color: blue;
-            color: lawngreen;
-            font-weight: bolder;
-            text-align: center;
-        }
-
-        .sheen5 {
-            background-color: lawngreen;
-            color: blue;
-            font-weight: bolder;
-            text-align: center;
-        }
-
-        .sheenNone {
-            background-color: darkgrey;
-            color: white;
-            font-weight: bolder;
-            text-align: center;
-        }
-
-        .schedule {
-            font-size: 12px;
-        }
-
-        canvas {
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-        }
-
-        .customDropDown {
-            z-index: 100;
-        }
-
-        .modal-lg-wider {
-            width: 70%;
-        }
-
-        .main {
-            margin-right: 50px;
-        }
 
         .Green {
             background-color: #3be26a;
@@ -90,29 +37,18 @@
             color: #f70919;
         }
 
-        .DashboardTitles {
-            background-color: #707372;
-            color: white;
+        .largeText {
+            font-size: 25px;
         }
 
-        .breakoutTotal {
-            background-color: lightgray;
-            color: black;
-            border-color: #707372 !important;
+        .needAttention {
+            background-color: red;
+            color:white
         }
 
-        .panel-default > .panel-heading {
-            color: white;
-            background-color: #707372;
-            border-color: #ddd;
-        }
-
-        .canvasSize {
-            height: 350px;
-        }
-
-        .yearlyTotals {
-            border-color: #707372 !important;
+        .healthy {
+            background-color: green;
+            color: white
         }
     </style>
 </head>
@@ -136,20 +72,88 @@
         </div>
     </div>
 
-    <h2>Manage Your Garden</h2>
+    <div class="row">
+        <div class="visible-lg-inline-block" style="text-align: center"><img src="~/Content/Images/GrobotLogo.png" title="Gro-Bot" /></div>
+
+        <div class="visible-lg-inline-block">
+            <h1>
+                Your Garden
+            </h1>
+        </div>
+    </div>
     <hr />
 
     <!--Form to input tool's field values, the field list is different for different types-->
     <form id="YourGardenForm" @*style="margin-left: 2em"*@ autocomplete="off">
 
-        <input type="text" id="name">
-        <input type="text" id="mobile">
-        <input type="text" id="email">
+        @*<input type="text" id="name">
+            <input type="text" id="mobile">
+            <input type="text" id="email">
 
-        <button type="button" id="button">Submit</button>
-
+            <button type="button" id="button">Submit</button>*@
     </form>
+
+    <div class="container-fluid main">
+        <div class="row text-center">
+
+            @if (Model.gardenID != null)
+            {
+
+                <span class="largeText">
+                    <strong>Bed: </strong>@Model.gardenName
+                </span>
+                <br />
+                <span class="largeText">
+                    <strong>Current plant type: </strong>@Model.plantTypeName
+                </span>
+                <br />
+
+                <span class="largeText">
+                    Progress: @Model.currentDay/@Model.plantTypeCycle days
+                </span>
+                <br />
+                <div class="progress center-block" style="width: 50%">
+                    <div class="progress-bar progress-bar-striped active bg-success" role="progressbar" style="width:@Model.progress%" aria-valuenow=@Model.currentDay aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            }
+        </div><br /><br /><br /><br />
+
+        <div class="row">
+            @*Help center table*@
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6 col-md-12">
+                <table id="tbl" width="200" class="table table-hover table-striped table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <td class="text-center">
+                                Temperature  <i class='fas fa-temperature-high'></i>
+                            </td>
+                            <td id="temp" class="text-center healthy">@Model.temperature</td>
+                            <td class="text-center" id="noteTemp"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                Moisture  <i class='fas fa-tint'></i>
+                            </td>
+                            <td id="moisture" class="text-center healthy">@Model.moisture</td>
+                            <td class="text-center" id="noteMoisture"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                Light  <i class='fas fa-cloud-sun'></i>
+                            </td>
+                            <td id="light" class="text-center healthy">@Model.light</td>
+                            <td class="text-center" id="noteLight"></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <hr />
+
+
 
     @section scripts
     {
@@ -158,34 +162,70 @@
         <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
 
         <script type="text/javascript">
-
             //var database = firebase.database;
-            $('#button').click(function () {
-                var clientName = document.getElementById('name').value;
-                var clientMobile = document.getElementById('mobile').value;
-                var clientEmail = document.getElementById('email').value;
+            //$('#button').click(function () {
+            //    var clientName = document.getElementById('name').value;
+            //    var clientMobile = document.getElementById('mobile').value;
+            //    var clientEmail = document.getElementById('email').value;
 
-                firebase.database.ref('https://grobot-senior-project.firebaseio.com/MyGarden/name').set(clientName);
-                firebase.database.ref('https://grobot-senior-project.firebaseio.com/MyGarden/mobile').set(clientMobile);
-                firebase.database.ref('https://grobot-senior-project.firebaseio.com/MyGarden/email').set(clientEmail);
-                alert("Hey")
+            //    //firebase.database().ref("MyGarden/").set(
+            //    //    {
+            //    //        name: clientName,
+            //    //        mobile: clientMobile,
+            //    //        email: clientEmail
+            //    //    });
 
-                //var firebaseClient = new FirebaseClient("https://grobot-senior-project.firebaseio.com");
-                //var result = await firebaseClient
-                //    .Child("Data/Test")
-                //    .PostAsync(clientName);
+            //    //var firebaseClient = new FirebaseClient("https://grobot-senior-project.firebaseio.com");
+            //    //var result = await firebaseClient
+            //    //    .Child("Data/Test")
+            //    //    .PostAsync(clientName);
 
-                reloadPage();
-            });
+            //    reloadPage();
+            //});
+
+            var myTemp = $('#temp').text();
+            var myMoisture = $('#moisture').text();
+            //var myLight = $('#light').text();
+            var lowestTemp = @Model.lowestTemp;
+            var highestTemp = @Model.highestTemp;
+
 
             function reloadPage() {
                 var locPage = "/Grobot/ManageGarden";
                 window.location.href = locPage;
             }
 
+            function compareFeedback(temp,moisture,light) {
+                if (temp < @Model.lowestTemp) {
+                    $('#temp').removeClass('healthy');
+                    $('#temp').addClass('needAttention');
+                    $('#noteTemp').addClass('text-danger');
+                    $('#noteTemp').text('Low Temperature')
+                }
+                else if (temp > @Model.highestTemp) {
+                    $('#temp').removeClass('healthy');
+                    $('#temp').addClass('needAttention');
+                    $('#noteTemp').addClass('text-danger');
+                    $('#noteTemp').text('High Temperature')
+                }
+
+                if (moisture < @Model.lowestMoisture) {
+                    $('#moisture').removeClass('healthy');
+                    $('#moisture').addClass('needAttention');
+                    $('#noteMoisture').addClass('text-danger');
+                    $('#noteMosture').text('Too Dry')
+                }
+                else if (moisture > @Model.highestMoisture) {
+                    $('#moisture').removeClass('healthy');
+                    $('#moisture').addClass('needAttention');
+                    $('#noteMoisture').addClass('text-danger');
+                    $('#noteMoisture').text('Too Wet')
+                }
+
+            }
 
             $(document).ready(function () {
-
+                compareFeedback(myTemp, myMoisture);
             })
         </script>
 
