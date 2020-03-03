@@ -59,10 +59,39 @@ namespace Gro_bot.Controllers
 
         public ActionResult ManageGarden()
         {
-            var myModel = TempData["myModel"] as Garden ?? new Garden
+            var myModel = TempData["myModel"] as ExistingGarden ?? new ExistingGarden
             {
-
+                
             };
+
+            var myGarden = (from g in db.GardenBeds
+                            select g).FirstOrDefault();
+
+            myModel.gardenID = myGarden.bedID;
+            myModel.gardenName = myGarden.bedName;
+
+            var myFeedback = (from f in db.BedFeedbackValues
+                              where f.bedID == myGarden.bedID
+                              select f).FirstOrDefault();
+
+            myModel.light = myFeedback.light;
+            myModel.moisture = myFeedback.moisture;
+            myModel.temperature = myFeedback.temperature;
+            myModel.currentDay = myFeedback.currentDay;
+
+            var myThreshold = (from t in db.PlantTypes
+                               where t.typeID == myGarden.typeID
+                               select t).FirstOrDefault();
+
+            myModel.plantTypeID = myThreshold.typeID;
+            myModel.plantTypeName = myThreshold.typeName;
+            myModel.plantTypeCycle = myThreshold.cycle.ToString();
+            myModel.highestTemp = myThreshold.highestTemp;
+            myModel.lowestTemp = myThreshold.lowestTemp;
+            myModel.highestMoisture = myThreshold.highestMoisture;
+            myModel.lowestMoisture = myThreshold.lowestMoisture;
+
+            myModel.progress = Convert.ToDouble((myModel.currentDay*100)/Convert.ToInt32(myModel.plantTypeCycle));
 
             return View(myModel);
         }

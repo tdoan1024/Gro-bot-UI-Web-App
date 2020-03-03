@@ -15,106 +15,6 @@
     <script src="~/Scripts/jquery-1.11.3.min.js"></script>
     <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
     <style>
-        #dest {
-            animation-duration: 3s;
-        }
-
-        .SlowAnimation {
-            animation-duration: 3s;
-        }
-
-        .chartArea {
-            width: 75px;
-            height: 75px;
-        }
-
-        .sheen20 {
-            background-color: blue;
-            color: lawngreen;
-            font-weight: bolder;
-            text-align: center;
-        }
-
-        .sheen5 {
-            background-color: lawngreen;
-            color: blue;
-            font-weight: bolder;
-            text-align: center;
-        }
-
-        .sheenNone {
-            background-color: darkgrey;
-            color: white;
-            font-weight: bolder;
-            text-align: center;
-        }
-
-        .schedule {
-            font-size: 12px;
-        }
-
-        canvas {
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-        }
-
-        .customDropDown {
-            z-index: 100;
-        }
-
-        .modal-lg-wider {
-            width: 70%;
-        }
-
-        .main {
-            margin-right: 50px;
-        }
- 
-        .Green{
-            background-color: #3be26a;
-            color:white;
-        }
- 
-        .GreenText {
-            color: #3be26a;
-        }
- 
-        .Red{
-            background-color: #f70919;
-            color:white;
-        }
- 
-        .RedText {
-            color: #f70919;
-        }
- 
-        .DashboardTitles {
-            background-color: #707372;
-            color: white;
-        
-        }
- 
-        .breakoutTotal {
-            background-color: lightgray;
-            color: black;
-            border-color: #707372 !important;
-        }
- 
-        .panel-default > .panel-heading {
-            color: white;
-            background-color: #707372;
-            border-color: #ddd;
-        }
- 
-        .canvasSize {
-            height: 350px;
-        }
- 
-        .yearlyTotals {
-            border-color: #707372 !important;
-        }
-
     </style>
 </head>
 
@@ -137,15 +37,22 @@
         </div>
     </div>
 
-    <h2>New Garden</h2>
-    <hr />
+    <div class="row">
+        <div class="visible-lg-inline-block" style="text-align: center"><img src="~/Content/Images/GrobotLogo.png" title="Gro-Bot" /></div>
 
-    <!--Form to input tool's field values, the field list is different for different types-->
+        <div class="visible-lg-inline-block">
+            <h1>
+                New Garden
+            </h1>
+        </div>
+    </div>
+    <hr />
+    <!--Form to create new garden-->
     <form id="CreateGardenForm" @*style="margin-left: 2em"*@ autocomplete="off">
 
 
         <div class="row">
-            <!--Drop down list of tool types-->
+            <!--Drop down list of plant types-->
             <div class="col-lg-2">
                 <label>Type of Plant</label>
             </div>
@@ -159,7 +66,6 @@
             </div>
         </div>
         <br />
-
         <div class="row">
             <div class="col-lg-2">
                 <label>Bed Name</label>
@@ -230,30 +136,6 @@
 
     @section scripts
     {
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
-
-        <!-- TODO: Add SDKs for Firebase products that you want to use
-             https://firebase.google.com/docs/web/setup#available-libraries -->
-        <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
-
-        <script>
-            // Your web app's Firebase configuration
-            var firebaseConfig = {
-                apiKey: "AIzaSyDyfux6x3mSdLAdN4iUKwY3hbwVQgcJzkc",
-                authDomain: "grobot-senior-project.firebaseapp.com",
-                databaseURL: "https://grobot-senior-project.firebaseio.com",
-                projectId: "grobot-senior-project",
-                storageBucket: "grobot-senior-project.appspot.com",
-                messagingSenderId: "4861335288",
-                appId: "1:4861335288:web:4a693f13f1a51e62b78d0d",
-                measurementId: "G-M5TGYRGJ4X"
-            };
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-            firebase.analytics();
-        </script>
-
 
         <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
         <script type="text/javascript">
