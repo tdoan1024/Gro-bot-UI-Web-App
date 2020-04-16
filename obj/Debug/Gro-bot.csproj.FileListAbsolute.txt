@@ -174,3 +174,17 @@ D:\Development\GrobotUI\obj\Debug\Gro-bot.csprojAssemblyReference.cache
 D:\Development\GrobotUI\obj\Debug\Gro-bot.csproj.CopyComplete
 D:\Development\GrobotUI\obj\Debug\Gro-bot.dll
 D:\Development\GrobotUI\obj\Debug\Gro-bot.pdb
+D:\Development\GrobotUI\bin\EntityFramework.dll
+D:\Development\GrobotUI\bin\EntityFramework.SqlServer.dll
+D:\Development\GrobotUI\bin\MySql.Data.dll
+D:\Development\GrobotUI\bin\MySql.Data.Entity.EF6.dll
+D:\Development\GrobotUI\bin\MySql.Data.EntityFramework.dll
+D:\Development\GrobotUI\bin\Google.Protobuf.dll
+D:\Development\GrobotUI\bin\BouncyCastle.Crypto.dll
+D:\Development\GrobotUI\bin\Ubiety.Dns.Core.dll
+D:\Development\GrobotUI\bin\Renci.SshNet.dll
+D:\Development\GrobotUI\bin\EntityFramework.xml
+D:\Development\GrobotUI\bin\EntityFramework.SqlServer.xml
+D:\Development\GrobotUI\bin\MySql.Data.xml
+D:\Development\GrobotUI\bin\MySql.Data.Entity.EF6.xml
+D:\Development\GrobotUI\bin\MySql.Data.EntityFramework.xml
