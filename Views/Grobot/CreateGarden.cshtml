@@ -59,9 +59,9 @@
             <div class="col-lg-4">
                 @Html.DropDownListFor(m => m.plantTypeID, new SelectList(Model._PlantTypeList, "plantTypeID", "plantTypeName"), "Select type of plant", new { @class = "form-control" })
                 @*<div class="form-inline">
-                        <input type="text" name="newPlantType" class="form-control" placeholder="Add New Plant Type..."/>
-                        <button class="btn btn-primary" id="AddTypeBtn">Save</button>
-                    </div>*@
+                    <input type="text" name="newPlantType" class="form-control" placeholder="Add New Plant Type..."/>
+                    <button class="btn btn-primary" id="AddTypeBtn">Save</button>
+                </div>*@
 
             </div>
         </div>
@@ -126,6 +126,16 @@
             </div>
 
         </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <label>What time to water?</label>
+            </div>
+            <div class="col-lg-4">
+                <input id="waterTime" class="form-control"/ placeholder="hh:mm"/>
+            </div>
+
+        </div>
         <hr />
 
         <button type="button" class="btn btn-success" id="CreateNewGarden">Submit</button>
@@ -139,9 +149,26 @@
 
         <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
         <script type="text/javascript">
+
+            var APIKey = '5RHD8MI4K249J8EU';
+            var timeToWater = $('#waterTime').val();
+            var testVal = 24;
             $('#CreateNewGarden').click(function () {
-                confirm('Please make sure you have filled in the seeds of your choice!')
-            })
+                //confirm('Please make sure you have filled in the seeds of your choice!');
+
+                //Write schedule to water onto Thingspeak
+                $.post("https://api.thingspeak.com/update.json&quot",
+                    {
+                        api_key: APIKey,
+                        field4: $('#waterTime').val()
+                    })
+                //alert($('#waterTime').val())
+                reloadPage();
+            });
+
+
+
+
 
             function reloadPage(plantTypeID) {
                 var locPage = "/Grobot/CreateGarden";
@@ -157,8 +184,14 @@
             })
 
             $(document).ready(function () {
+                //$.post("https://thingspeak.com/channels/1006409/field/4/last.txt",
+                //    function (response) {
+                //        alert(response)
+                //    });
+                });
 
-            })
+
+
         </script>
 
 

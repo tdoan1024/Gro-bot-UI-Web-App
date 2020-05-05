@@ -119,36 +119,50 @@
         </div><br /><br /><br /><br />
 
         <div class="row">
-            @*Help center table*@
+
             <div class="col-lg-3"></div>
             <div class="col-lg-6 col-md-12">
-                <table id="tbl" width="200" class="table table-hover table-striped table-bordered table-condensed">
+                <table id="tbl" class="table table-hover table-striped table-bordered table-condensed">
                     <thead>
                         <tr>
                             <td class="text-center">
                                 Temperature  <i class='fas fa-temperature-high'></i>
                             </td>
-                            <td id="temp" class="text-center healthy">@Model.temperature</td>
-                            <td class="text-center" id="noteTemp"></td>
+                            <td id="temp" class="text-center ">@*@Model.temperature*@
+                                @*<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/widgets/172652"></iframe>*@
+                                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+                            </td>
+                           
+                            @*<td class="text-center" id="noteTemp"></td>*@
                         </tr>
                         <tr>
                             <td class="text-center">
                                 Moisture  <i class='fas fa-tint'></i>
                             </td>
-                            <td id="moisture" class="text-center healthy">@Model.moisture</td>
-                            <td class="text-center" id="noteMoisture"></td>
+                            <td id="moisture" class="text-center ">@*@Model.moisture*@
+                                @*<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/widgets/172766"></iframe>*@
+                                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+                            </td>
+                            @*<td class="text-center" id="noteMoisture"></td>*@
                         </tr>
                         <tr>
                             <td class="text-center">
                                 Light  <i class='fas fa-cloud-sun'></i>
                             </td>
-                            <td id="light" class="text-center healthy">@Model.light</td>
-                            <td class="text-center" id="noteLight"></td>
+                            <td id="light" class="text-center ">@*@Model.light*@
+                                @*<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/widgets/172767"></iframe>*@
+                                <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+                            </td>
+                            @*<td class="text-center" id="noteLight"></td>*@
                         </tr>
                     </thead>
                 </table>
             </div>
         </div>
+
+        <a class="btn btn-info" href="https://thingspeak.com/channels/1006409" target="_blank">
+            See more on ThingSpeak channel
+        </a>
     </div>
 
     <hr />
@@ -157,31 +171,9 @@
 
     @section scripts
     {
-        <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
-
-        <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
 
         <script type="text/javascript">
-            //var database = firebase.database;
-            //$('#button').click(function () {
-            //    var clientName = document.getElementById('name').value;
-            //    var clientMobile = document.getElementById('mobile').value;
-            //    var clientEmail = document.getElementById('email').value;
 
-            //    //firebase.database().ref("MyGarden/").set(
-            //    //    {
-            //    //        name: clientName,
-            //    //        mobile: clientMobile,
-            //    //        email: clientEmail
-            //    //    });
-
-            //    //var firebaseClient = new FirebaseClient("https://grobot-senior-project.firebaseio.com");
-            //    //var result = await firebaseClient
-            //    //    .Child("Data/Test")
-            //    //    .PostAsync(clientName);
-
-            //    reloadPage();
-            //});
 
             var myTemp = $('#temp').text();
             var myMoisture = $('#moisture').text();
@@ -189,6 +181,7 @@
             var lowestTemp = @Model.lowestTemp;
             var highestTemp = @Model.highestTemp;
 
+            
 
             function reloadPage() {
                 var locPage = "/Grobot/ManageGarden";
@@ -224,8 +217,10 @@
 
             }
 
+            
+
             $(document).ready(function () {
-                compareFeedback(myTemp, myMoisture);
+                //compareFeedback(myTemp, myMoisture);
             })
         </script>
 
