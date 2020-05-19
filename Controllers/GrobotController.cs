@@ -57,6 +57,14 @@ namespace Gro_bot.Controllers
             return View(myModel);
         }
 
+        //Add new bed
+        public string AddBed(string bedName, string typeID, waterDay[] waterDays, fertilizingDay[] fertilizerDays)
+        {
+            
+            
+            
+            return "New garden bed added";
+        }
         public ActionResult ManageGarden()
         {
             var myModel = TempData["myModel"] as ExistingGarden ?? new ExistingGarden
@@ -96,4 +104,5 @@ namespace Gro_bot.Controllers
             return View(myModel);
         }
     }
+
 }

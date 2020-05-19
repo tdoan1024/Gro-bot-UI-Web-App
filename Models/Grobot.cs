@@ -10,6 +10,15 @@ namespace Gro_bot.Models
         public List<object> _PlantTypeList { get; set; }
     }
     
+    public class waterDay
+    {
+
+    }
+
+    public class fertilizingDay
+    {
+
+    }
     public class Garden
     {
         public List<PlantTypeObj> _PlantTypeList { get; set; }

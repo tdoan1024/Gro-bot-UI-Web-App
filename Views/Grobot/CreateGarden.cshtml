@@ -67,16 +67,16 @@
         </div>
         <br />
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-12">
                 <label>Bed Name</label>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-12">
                 <input type="text" class="form-control" placeholder="Enter Bed Name" />
             </div>
 
         </div>
         <br />
-        <div class="row">
+        @*<div class="row">
             <div class="col-lg-2">
                 <label>Bed Dimension (inch)</label>
             </div>
@@ -88,51 +88,101 @@
                 <input type="text" class="form-control" placeholder="Width" />
             </div>
         </div>
-        <br />
+        <br />*@
 
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-12">
                 <label>Cycle (days)</label>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-12">
                 <span class="form-control">@Model.plantTypeCycle</span>
             </div>
-
         </div>
         <br />
         <div class="row">
-            <div class="col-lg-2">
-                <label>How often to water? (daily)</label>
+            <div class="col-lg-2 col-md-6">
+                <label>Date to Water</label>
             </div>
-            <div class="col-lg-4">
-                <input class="form-control" value="@Model.plantTypeRecWaterSchedule (Recommended)" />
-            </div>
-            <div class="col-lg-2">
-                <label>Time(s)/day</label>
+            <div class="col-lg-4 col-md-6" id="waterDayDiv">
+                <div>
+                    <input name="waterDay" type="checkbox" value="0">
+                    <span>Sunday</span>
+                </div>
+                <div>
+                    <input name="waterDay" type="checkbox" value="1">
+                    <span>Monday</span>
+                </div>
+                <div>
+                    <input name="waterDay" type="checkbox" value="2">
+                    <span>Tuesday</span>
+                </div>
+                <div>
+                    <input name="waterDay" type="checkbox" value="3">
+                    <span>Wednesday</span>
+                </div>
+                <div>
+                    <input name="waterDay" type="checkbox" value="4">
+                    <span>Thursday</span>
+                </div>
+                <div>
+                    <input name="waterDay" type="checkbox" value="5">
+                    <span>Friday</span>
+                </div>
+                <div>
+                    <input name="waterDay" type="checkbox" value="6">
+                    <span>Saturday</span>
+                </div>
             </div>
 
+            <div class="col-lg-2 col-md-6">
+                <label>Date to Fertilize</label>
+            </div>
+            <div class="col-lg-4 col-md-6" id="ferDayDiv">
+                <div>
+                    <input name="ferDay" type="checkbox" value="0">
+                    <span>Sunday</span>
+                </div>
+                <div>
+                    <input name="ferDay" type="checkbox" value="1">
+                    <span>Monday</span>
+                </div>
+                <div>
+                    <input name="ferDay" type="checkbox" value="2">
+                    <span>Tuesday</span>
+                </div>
+                <div>
+                    <input name="ferDay" type="checkbox" value="3">
+                    <span>Wednesday</span>
+                </div>
+                <div>
+                    <input name="ferDay" type="checkbox" value="4">
+                    <span>Thursday</span>
+                </div>
+                <div>
+                    <input name="ferDay" type="checkbox" value="5">
+                    <span>Friday</span>
+                </div>
+                <div>
+                    <input name="ferDay" type="checkbox" value="6">
+                    <span>Saturday</span>
+                </div>
+            </div>
         </div>
         <br />
-        <div class="row">
-            <div class="col-lg-2">
-                <label>How often to fertilize? (monthly)</label>
-            </div>
-            <div class="col-lg-4">
-                <span class="form-control" contenteditable="true">@Model.plantTypeRecFertSchedule (Recommended)</span>
-                <span>Time(s)</span>
-            </div>
-            <div class="col-lg-2">
-                <label>Time(s)/month</label>
-            </div>
-
-        </div>
 
         <div class="row">
             <div class="col-lg-2">
-                <label>What time to water?</label>
+                <label>Time to Water</label>
             </div>
             <div class="col-lg-4">
-                <input id="waterTime" class="form-control"/ placeholder="hh:mm"/>
+                <input id="waterTime" class="form-control" placeholder="hh:mm" />
+            </div>
+
+            <div class="col-lg-2">
+                <label>Time to Fertilize</label>
+            </div>
+            <div class="col-lg-4">
+                <input id="fertilizeTime" class="form-control" placeholder="hh:mm" />
             </div>
 
         </div>
@@ -150,20 +200,47 @@
         <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
         <script type="text/javascript">
 
+            //setInterval('window.location.reload()', 10000);
+
             var APIKey = '5RHD8MI4K249J8EU';
-            var timeToWater = $('#waterTime').val();
-            var testVal = 24;
             $('#CreateNewGarden').click(function () {
                 //confirm('Please make sure you have filled in the seeds of your choice!');
+                var timeToWater = $('#waterTime').val();
+                var timetoFertilize = $('#fertilizeTime').val();
 
                 //Write schedule to water onto Thingspeak
-                $.post("https://api.thingspeak.com/update.json&quot",
-                    {
-                        api_key: APIKey,
-                        field4: $('#waterTime').val()
-                    })
-                //alert($('#waterTime').val())
+                //$.post("https://api.thingspeak.com/update.json&quot",
+                //    {
+                //        api_key: APIKey,
+                //        field4: timeToWater
+                //    })
+                var myWaterDayList = [];
+                var myFerDayList = [];
+                var mySelected;
+                var myDay;
+
+                //Checkbox for Water is checked, put it into the water day list
+                $('#waterDayDiv').find('div').each(function () {
+                    mySelected = $(this).find('input[name~="waterDay"]').prop("checked");
+                    myDay = $(this).find('input[name~="waterDay"]').val();
+                    if (mySelected) {
+                        myWaterDayList.push(myDay);
+                    }
+                });
+                //Checkbox for Fertilizer is checked, put it into the fertilizing list
+                $('#ferDayDiv').find('div').each(function () {
+                    mySelected = $(this).find('input[name~="ferDay"]').prop("checked");
+                    myDay = $(this).find('input[name~="ferDay"]').val();
+                    if (mySelected) {
+                        myFerDayList.push(myDay);
+                    }
+                });
+
+                alert('Days to water: ' + myWaterDayList + " Water time: " + timeToWater)
+                alert('Days to fertilize: ' + myFerDayList + " Water time: " + timetoFertilize)
+
                 reloadPage();
+
             });
 
 
