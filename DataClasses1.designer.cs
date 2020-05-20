@@ -30,15 +30,24 @@ namespace Gro_bot
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertBedFeedbackValue(BedFeedbackValue instance);
+    partial void UpdateBedFeedbackValue(BedFeedbackValue instance);
+    partial void DeleteBedFeedbackValue(BedFeedbackValue instance);
     partial void InsertGardenBed(GardenBed instance);
     partial void UpdateGardenBed(GardenBed instance);
     partial void DeleteGardenBed(GardenBed instance);
     partial void InsertPlantType(PlantType instance);
     partial void UpdatePlantType(PlantType instance);
     partial void DeletePlantType(PlantType instance);
-    partial void InsertBedFeedbackValue(BedFeedbackValue instance);
-    partial void UpdateBedFeedbackValue(BedFeedbackValue instance);
-    partial void DeleteBedFeedbackValue(BedFeedbackValue instance);
+    partial void InsertRoutineDay(RoutineDay instance);
+    partial void UpdateRoutineDay(RoutineDay instance);
+    partial void DeleteRoutineDay(RoutineDay instance);
+    partial void InsertRoutine(Routine instance);
+    partial void UpdateRoutine(Routine instance);
+    partial void DeleteRoutine(Routine instance);
+    partial void InsertRoutineTime(RoutineTime instance);
+    partial void UpdateRoutineTime(RoutineTime instance);
+    partial void DeleteRoutineTime(RoutineTime instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -71,6 +80,14 @@ namespace Gro_bot
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<BedFeedbackValue> BedFeedbackValues
+		{
+			get
+			{
+				return this.GetTable<BedFeedbackValue>();
+			}
+		}
+		
 		public System.Data.Linq.Table<GardenBed> GardenBeds
 		{
 			get
@@ -87,11 +104,226 @@ namespace Gro_bot
 			}
 		}
 		
-		public System.Data.Linq.Table<BedFeedbackValue> BedFeedbackValues
+		public System.Data.Linq.Table<RoutineDay> RoutineDays
 		{
 			get
 			{
-				return this.GetTable<BedFeedbackValue>();
+				return this.GetTable<RoutineDay>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Routine> Routines
+		{
+			get
+			{
+				return this.GetTable<Routine>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RoutineTime> RoutineTimes
+		{
+			get
+			{
+				return this.GetTable<RoutineTime>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BedFeedbackValues")]
+	public partial class BedFeedbackValue : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _bedID;
+		
+		private int _temperature;
+		
+		private int _moisture;
+		
+		private int _light;
+		
+		private System.Nullable<int> _currentDay;
+		
+		private EntityRef<GardenBed> _GardenBed;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnbedIDChanging(int value);
+    partial void OnbedIDChanged();
+    partial void OntemperatureChanging(int value);
+    partial void OntemperatureChanged();
+    partial void OnmoistureChanging(int value);
+    partial void OnmoistureChanged();
+    partial void OnlightChanging(int value);
+    partial void OnlightChanged();
+    partial void OncurrentDayChanging(System.Nullable<int> value);
+    partial void OncurrentDayChanged();
+    #endregion
+		
+		public BedFeedbackValue()
+		{
+			this._GardenBed = default(EntityRef<GardenBed>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int bedID
+		{
+			get
+			{
+				return this._bedID;
+			}
+			set
+			{
+				if ((this._bedID != value))
+				{
+					if (this._GardenBed.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnbedIDChanging(value);
+					this.SendPropertyChanging();
+					this._bedID = value;
+					this.SendPropertyChanged("bedID");
+					this.OnbedIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temperature", DbType="Int NOT NULL")]
+		public int temperature
+		{
+			get
+			{
+				return this._temperature;
+			}
+			set
+			{
+				if ((this._temperature != value))
+				{
+					this.OntemperatureChanging(value);
+					this.SendPropertyChanging();
+					this._temperature = value;
+					this.SendPropertyChanged("temperature");
+					this.OntemperatureChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_moisture", DbType="Int NOT NULL")]
+		public int moisture
+		{
+			get
+			{
+				return this._moisture;
+			}
+			set
+			{
+				if ((this._moisture != value))
+				{
+					this.OnmoistureChanging(value);
+					this.SendPropertyChanging();
+					this._moisture = value;
+					this.SendPropertyChanged("moisture");
+					this.OnmoistureChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_light", DbType="Int NOT NULL")]
+		public int light
+		{
+			get
+			{
+				return this._light;
+			}
+			set
+			{
+				if ((this._light != value))
+				{
+					this.OnlightChanging(value);
+					this.SendPropertyChanging();
+					this._light = value;
+					this.SendPropertyChanged("light");
+					this.OnlightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_currentDay", DbType="Int")]
+		public System.Nullable<int> currentDay
+		{
+			get
+			{
+				return this._currentDay;
+			}
+			set
+			{
+				if ((this._currentDay != value))
+				{
+					this.OncurrentDayChanging(value);
+					this.SendPropertyChanging();
+					this._currentDay = value;
+					this.SendPropertyChanged("currentDay");
+					this.OncurrentDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_BedFeedbackValue", Storage="_GardenBed", ThisKey="bedID", OtherKey="bedID", IsForeignKey=true)]
+		public GardenBed GardenBed
+		{
+			get
+			{
+				return this._GardenBed.Entity;
+			}
+			set
+			{
+				GardenBed previousValue = this._GardenBed.Entity;
+				if (((previousValue != value) 
+							|| (this._GardenBed.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._GardenBed.Entity = null;
+						previousValue.BedFeedbackValue = null;
+					}
+					this._GardenBed.Entity = value;
+					if ((value != null))
+					{
+						value.BedFeedbackValue = this;
+						this._bedID = value.bedID;
+					}
+					else
+					{
+						this._bedID = default(int);
+					}
+					this.SendPropertyChanged("GardenBed");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -114,6 +346,10 @@ namespace Gro_bot
 		
 		private EntityRef<BedFeedbackValue> _BedFeedbackValue;
 		
+		private EntitySet<RoutineDay> _RoutineDays;
+		
+		private EntitySet<RoutineTime> _RoutineTimes;
+		
 		private EntityRef<PlantType> _PlantType;
 		
     #region Extensibility Method Definitions
@@ -135,6 +371,8 @@ namespace Gro_bot
 		public GardenBed()
 		{
 			this._BedFeedbackValue = default(EntityRef<BedFeedbackValue>);
+			this._RoutineDays = new EntitySet<RoutineDay>(new Action<RoutineDay>(this.attach_RoutineDays), new Action<RoutineDay>(this.detach_RoutineDays));
+			this._RoutineTimes = new EntitySet<RoutineTime>(new Action<RoutineTime>(this.attach_RoutineTimes), new Action<RoutineTime>(this.detach_RoutineTimes));
 			this._PlantType = default(EntityRef<PlantType>);
 			OnCreated();
 		}
@@ -272,6 +510,32 @@ namespace Gro_bot
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_RoutineDay", Storage="_RoutineDays", ThisKey="bedID", OtherKey="bedID")]
+		public EntitySet<RoutineDay> RoutineDays
+		{
+			get
+			{
+				return this._RoutineDays;
+			}
+			set
+			{
+				this._RoutineDays.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_RoutineTime", Storage="_RoutineTimes", ThisKey="bedID", OtherKey="bedID")]
+		public EntitySet<RoutineTime> RoutineTimes
+		{
+			get
+			{
+				return this._RoutineTimes;
+			}
+			set
+			{
+				this._RoutineTimes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantType_GardenBed", Storage="_PlantType", ThisKey="typeID", OtherKey="typeID", IsForeignKey=true)]
 		public PlantType PlantType
 		{
@@ -324,6 +588,30 @@ namespace Gro_bot
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_RoutineDays(RoutineDay entity)
+		{
+			this.SendPropertyChanging();
+			entity.GardenBed = this;
+		}
+		
+		private void detach_RoutineDays(RoutineDay entity)
+		{
+			this.SendPropertyChanging();
+			entity.GardenBed = null;
+		}
+		
+		private void attach_RoutineTimes(RoutineTime entity)
+		{
+			this.SendPropertyChanging();
+			entity.GardenBed = this;
+		}
+		
+		private void detach_RoutineTimes(RoutineTime entity)
+		{
+			this.SendPropertyChanging();
+			entity.GardenBed = null;
 		}
 	}
 	
@@ -609,23 +897,21 @@ namespace Gro_bot
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BedFeedbackValues")]
-	public partial class BedFeedbackValue : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RoutineDay")]
+	public partial class RoutineDay : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _bedID;
 		
-		private int _temperature;
+		private int _routineID;
 		
-		private int _moisture;
-		
-		private int _light;
-		
-		private System.Nullable<int> _currentDay;
+		private int _day;
 		
 		private EntityRef<GardenBed> _GardenBed;
+		
+		private EntityRef<Routine> _Routine;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -633,19 +919,16 @@ namespace Gro_bot
     partial void OnCreated();
     partial void OnbedIDChanging(int value);
     partial void OnbedIDChanged();
-    partial void OntemperatureChanging(int value);
-    partial void OntemperatureChanged();
-    partial void OnmoistureChanging(int value);
-    partial void OnmoistureChanged();
-    partial void OnlightChanging(int value);
-    partial void OnlightChanged();
-    partial void OncurrentDayChanging(System.Nullable<int> value);
-    partial void OncurrentDayChanged();
+    partial void OnroutineIDChanging(int value);
+    partial void OnroutineIDChanged();
+    partial void OndayChanging(int value);
+    partial void OndayChanged();
     #endregion
 		
-		public BedFeedbackValue()
+		public RoutineDay()
 		{
 			this._GardenBed = default(EntityRef<GardenBed>);
+			this._Routine = default(EntityRef<Routine>);
 			OnCreated();
 		}
 		
@@ -673,87 +956,51 @@ namespace Gro_bot
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temperature", DbType="Int NOT NULL")]
-		public int temperature
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_routineID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int routineID
 		{
 			get
 			{
-				return this._temperature;
+				return this._routineID;
 			}
 			set
 			{
-				if ((this._temperature != value))
+				if ((this._routineID != value))
 				{
-					this.OntemperatureChanging(value);
+					if (this._Routine.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnroutineIDChanging(value);
 					this.SendPropertyChanging();
-					this._temperature = value;
-					this.SendPropertyChanged("temperature");
-					this.OntemperatureChanged();
+					this._routineID = value;
+					this.SendPropertyChanged("routineID");
+					this.OnroutineIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_moisture", DbType="Int NOT NULL")]
-		public int moisture
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_day", DbType="Int NOT NULL")]
+		public int day
 		{
 			get
 			{
-				return this._moisture;
+				return this._day;
 			}
 			set
 			{
-				if ((this._moisture != value))
+				if ((this._day != value))
 				{
-					this.OnmoistureChanging(value);
+					this.OndayChanging(value);
 					this.SendPropertyChanging();
-					this._moisture = value;
-					this.SendPropertyChanged("moisture");
-					this.OnmoistureChanged();
+					this._day = value;
+					this.SendPropertyChanged("day");
+					this.OndayChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_light", DbType="Int NOT NULL")]
-		public int light
-		{
-			get
-			{
-				return this._light;
-			}
-			set
-			{
-				if ((this._light != value))
-				{
-					this.OnlightChanging(value);
-					this.SendPropertyChanging();
-					this._light = value;
-					this.SendPropertyChanged("light");
-					this.OnlightChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_currentDay", DbType="Int")]
-		public System.Nullable<int> currentDay
-		{
-			get
-			{
-				return this._currentDay;
-			}
-			set
-			{
-				if ((this._currentDay != value))
-				{
-					this.OncurrentDayChanging(value);
-					this.SendPropertyChanging();
-					this._currentDay = value;
-					this.SendPropertyChanged("currentDay");
-					this.OncurrentDayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_BedFeedbackValue", Storage="_GardenBed", ThisKey="bedID", OtherKey="bedID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_RoutineDay", Storage="_GardenBed", ThisKey="bedID", OtherKey="bedID", IsForeignKey=true)]
 		public GardenBed GardenBed
 		{
 			get
@@ -770,12 +1017,12 @@ namespace Gro_bot
 					if ((previousValue != null))
 					{
 						this._GardenBed.Entity = null;
-						previousValue.BedFeedbackValue = null;
+						previousValue.RoutineDays.Remove(this);
 					}
 					this._GardenBed.Entity = value;
 					if ((value != null))
 					{
-						value.BedFeedbackValue = this;
+						value.RoutineDays.Add(this);
 						this._bedID = value.bedID;
 					}
 					else
@@ -783,6 +1030,374 @@ namespace Gro_bot
 						this._bedID = default(int);
 					}
 					this.SendPropertyChanged("GardenBed");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Routine_RoutineDay", Storage="_Routine", ThisKey="routineID", OtherKey="routineID", IsForeignKey=true)]
+		public Routine Routine
+		{
+			get
+			{
+				return this._Routine.Entity;
+			}
+			set
+			{
+				Routine previousValue = this._Routine.Entity;
+				if (((previousValue != value) 
+							|| (this._Routine.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Routine.Entity = null;
+						previousValue.RoutineDays.Remove(this);
+					}
+					this._Routine.Entity = value;
+					if ((value != null))
+					{
+						value.RoutineDays.Add(this);
+						this._routineID = value.routineID;
+					}
+					else
+					{
+						this._routineID = default(int);
+					}
+					this.SendPropertyChanged("Routine");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Routines")]
+	public partial class Routine : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _routineID;
+		
+		private string _routineType;
+		
+		private EntitySet<RoutineDay> _RoutineDays;
+		
+		private EntitySet<RoutineTime> _RoutineTimes;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnroutineIDChanging(int value);
+    partial void OnroutineIDChanged();
+    partial void OnroutineTypeChanging(string value);
+    partial void OnroutineTypeChanged();
+    #endregion
+		
+		public Routine()
+		{
+			this._RoutineDays = new EntitySet<RoutineDay>(new Action<RoutineDay>(this.attach_RoutineDays), new Action<RoutineDay>(this.detach_RoutineDays));
+			this._RoutineTimes = new EntitySet<RoutineTime>(new Action<RoutineTime>(this.attach_RoutineTimes), new Action<RoutineTime>(this.detach_RoutineTimes));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_routineID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int routineID
+		{
+			get
+			{
+				return this._routineID;
+			}
+			set
+			{
+				if ((this._routineID != value))
+				{
+					this.OnroutineIDChanging(value);
+					this.SendPropertyChanging();
+					this._routineID = value;
+					this.SendPropertyChanged("routineID");
+					this.OnroutineIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_routineType", DbType="NChar(50) NOT NULL", CanBeNull=false)]
+		public string routineType
+		{
+			get
+			{
+				return this._routineType;
+			}
+			set
+			{
+				if ((this._routineType != value))
+				{
+					this.OnroutineTypeChanging(value);
+					this.SendPropertyChanging();
+					this._routineType = value;
+					this.SendPropertyChanged("routineType");
+					this.OnroutineTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Routine_RoutineDay", Storage="_RoutineDays", ThisKey="routineID", OtherKey="routineID")]
+		public EntitySet<RoutineDay> RoutineDays
+		{
+			get
+			{
+				return this._RoutineDays;
+			}
+			set
+			{
+				this._RoutineDays.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Routine_RoutineTime", Storage="_RoutineTimes", ThisKey="routineID", OtherKey="routineID")]
+		public EntitySet<RoutineTime> RoutineTimes
+		{
+			get
+			{
+				return this._RoutineTimes;
+			}
+			set
+			{
+				this._RoutineTimes.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_RoutineDays(RoutineDay entity)
+		{
+			this.SendPropertyChanging();
+			entity.Routine = this;
+		}
+		
+		private void detach_RoutineDays(RoutineDay entity)
+		{
+			this.SendPropertyChanging();
+			entity.Routine = null;
+		}
+		
+		private void attach_RoutineTimes(RoutineTime entity)
+		{
+			this.SendPropertyChanging();
+			entity.Routine = this;
+		}
+		
+		private void detach_RoutineTimes(RoutineTime entity)
+		{
+			this.SendPropertyChanging();
+			entity.Routine = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RoutineTime")]
+	public partial class RoutineTime : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _bedID;
+		
+		private int _routineID;
+		
+		private int _time;
+		
+		private EntityRef<GardenBed> _GardenBed;
+		
+		private EntityRef<Routine> _Routine;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnbedIDChanging(int value);
+    partial void OnbedIDChanged();
+    partial void OnroutineIDChanging(int value);
+    partial void OnroutineIDChanged();
+    partial void OntimeChanging(int value);
+    partial void OntimeChanged();
+    #endregion
+		
+		public RoutineTime()
+		{
+			this._GardenBed = default(EntityRef<GardenBed>);
+			this._Routine = default(EntityRef<Routine>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int bedID
+		{
+			get
+			{
+				return this._bedID;
+			}
+			set
+			{
+				if ((this._bedID != value))
+				{
+					if (this._GardenBed.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnbedIDChanging(value);
+					this.SendPropertyChanging();
+					this._bedID = value;
+					this.SendPropertyChanged("bedID");
+					this.OnbedIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_routineID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int routineID
+		{
+			get
+			{
+				return this._routineID;
+			}
+			set
+			{
+				if ((this._routineID != value))
+				{
+					if (this._Routine.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnroutineIDChanging(value);
+					this.SendPropertyChanging();
+					this._routineID = value;
+					this.SendPropertyChanged("routineID");
+					this.OnroutineIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_time", DbType="Int NOT NULL")]
+		public int time
+		{
+			get
+			{
+				return this._time;
+			}
+			set
+			{
+				if ((this._time != value))
+				{
+					this.OntimeChanging(value);
+					this.SendPropertyChanging();
+					this._time = value;
+					this.SendPropertyChanged("time");
+					this.OntimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GardenBed_RoutineTime", Storage="_GardenBed", ThisKey="bedID", OtherKey="bedID", IsForeignKey=true)]
+		public GardenBed GardenBed
+		{
+			get
+			{
+				return this._GardenBed.Entity;
+			}
+			set
+			{
+				GardenBed previousValue = this._GardenBed.Entity;
+				if (((previousValue != value) 
+							|| (this._GardenBed.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._GardenBed.Entity = null;
+						previousValue.RoutineTimes.Remove(this);
+					}
+					this._GardenBed.Entity = value;
+					if ((value != null))
+					{
+						value.RoutineTimes.Add(this);
+						this._bedID = value.bedID;
+					}
+					else
+					{
+						this._bedID = default(int);
+					}
+					this.SendPropertyChanged("GardenBed");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Routine_RoutineTime", Storage="_Routine", ThisKey="routineID", OtherKey="routineID", IsForeignKey=true)]
+		public Routine Routine
+		{
+			get
+			{
+				return this._Routine.Entity;
+			}
+			set
+			{
+				Routine previousValue = this._Routine.Entity;
+				if (((previousValue != value) 
+							|| (this._Routine.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Routine.Entity = null;
+						previousValue.RoutineTimes.Remove(this);
+					}
+					this._Routine.Entity = value;
+					if ((value != null))
+					{
+						value.RoutineTimes.Add(this);
+						this._routineID = value.routineID;
+					}
+					else
+					{
+						this._routineID = default(int);
+					}
+					this.SendPropertyChanged("Routine");
 				}
 			}
 		}

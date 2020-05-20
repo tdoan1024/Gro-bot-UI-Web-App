@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="grobot" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=97.113.20.51,50612;Initial Catalog=grobot;Persist Security Info=True;User ID=TestLog" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="grobotConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=174.21.66.249,50612;Initial Catalog=grobot;Persist Security Info=True;User ID=TestLog" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="grobotConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BedFeedbackValues" Member="BedFeedbackValues">
+    <Type Name="BedFeedbackValue">
+      <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="temperature" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="moisture" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="light" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="currentDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="GardenBed_BedFeedbackValue" Member="GardenBed" ThisKey="bedID" OtherKey="bedID" Type="GardenBed" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.GardenBeds" Member="GardenBeds">
     <Type Name="GardenBed">
       <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -8,6 +18,8 @@
       <Column Name="length" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="width" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="GardenBed_BedFeedbackValue" Member="BedFeedbackValue" ThisKey="bedID" OtherKey="bedID" Type="BedFeedbackValue" Cardinality="One" />
+      <Association Name="GardenBed_RoutineDay" Member="RoutineDays" ThisKey="bedID" OtherKey="bedID" Type="RoutineDay" />
+      <Association Name="GardenBed_RoutineTime" Member="RoutineTimes" ThisKey="bedID" OtherKey="bedID" Type="RoutineTime" />
       <Association Name="PlantType_GardenBed" Member="PlantType" ThisKey="typeID" OtherKey="typeID" Type="PlantType" IsForeignKey="true" />
     </Type>
   </Table>
@@ -25,14 +37,30 @@
       <Association Name="PlantType_GardenBed" Member="GardenBeds" ThisKey="typeID" OtherKey="typeID" Type="GardenBed" />
     </Type>
   </Table>
-  <Table Name="dbo.BedFeedbackValues" Member="BedFeedbackValues">
-    <Type Name="BedFeedbackValue">
+  <Table Name="dbo.RoutineDay" Member="RoutineDays">
+    <Type Name="RoutineDay">
       <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="temperature" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="moisture" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="light" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="currentDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="GardenBed_BedFeedbackValue" Member="GardenBed" ThisKey="bedID" OtherKey="bedID" Type="GardenBed" IsForeignKey="true" />
+      <Column Name="routineID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="day" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="GardenBed_RoutineDay" Member="GardenBed" ThisKey="bedID" OtherKey="bedID" Type="GardenBed" IsForeignKey="true" />
+      <Association Name="Routine_RoutineDay" Member="Routine" ThisKey="routineID" OtherKey="routineID" Type="Routine" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Routines" Member="Routines">
+    <Type Name="Routine">
+      <Column Name="routineID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="routineType" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Routine_RoutineDay" Member="RoutineDays" ThisKey="routineID" OtherKey="routineID" Type="RoutineDay" />
+      <Association Name="Routine_RoutineTime" Member="RoutineTimes" ThisKey="routineID" OtherKey="routineID" Type="RoutineTime" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RoutineTime" Member="RoutineTimes">
+    <Type Name="RoutineTime">
+      <Column Name="bedID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="routineID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="time" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="GardenBed_RoutineTime" Member="GardenBed" ThisKey="bedID" OtherKey="bedID" Type="GardenBed" IsForeignKey="true" />
+      <Association Name="Routine_RoutineTime" Member="Routine" ThisKey="routineID" OtherKey="routineID" Type="Routine" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

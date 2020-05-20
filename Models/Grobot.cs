@@ -12,12 +12,12 @@ namespace Gro_bot.Models
     
     public class waterDay
     {
-
+        public int wDay { get; set; }
     }
 
     public class fertilizingDay
     {
-
+        public int fDay { get; set; }
     }
     public class Garden
     {

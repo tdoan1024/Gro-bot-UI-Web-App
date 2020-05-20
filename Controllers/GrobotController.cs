@@ -58,12 +58,78 @@ namespace Gro_bot.Controllers
         }
 
         //Add new bed
-        public string AddBed(string bedName, string typeID, waterDay[] waterDays, fertilizingDay[] fertilizerDays)
+        public string AddBed(string bedName, int typeID, int[] waterDays, int[] fertilizerDays, int waterTime, int ferTime)
         {
-            
-            
-            
-            return "New garden bed added";
+            GardenBed newGarden = new GardenBed
+            {
+                typeID = typeID,
+                bedName = bedName
+            };
+
+            //Add new garden bed to GardenBeds table
+            db.GardenBeds.InsertOnSubmit(newGarden);
+            db.SubmitChanges();
+
+            int bedID;
+            bedID = newGarden.bedID;
+
+            if (waterDays == null || fertilizerDays == null
+                || string.IsNullOrWhiteSpace(waterTime.ToString())
+                || string.IsNullOrWhiteSpace(ferTime.ToString()))
+           
+            {
+                return "Error. Missing Info";
+            }
+
+
+            if (waterDays.Any() && fertilizerDays.Any())
+            {
+                //Add scheduled water days to Database
+                foreach (var item in waterDays)
+                {
+                    RoutineDay wD = new RoutineDay
+                    {
+                        bedID = bedID,
+                        routineID = 1,
+                        day = item
+                    };
+                    db.RoutineDays.InsertOnSubmit(wD);
+
+                }
+
+                //Add scheduled fertilizing days to database
+                foreach (var item in fertilizerDays)
+                {
+                    RoutineDay fD = new RoutineDay
+                    {
+                        bedID = bedID,
+                        routineID = 2,
+                        day = item
+                    };
+                    db.RoutineDays.InsertOnSubmit(fD);
+
+                }
+            }
+
+            //Add scheduled water time
+            RoutineTime wT = new RoutineTime
+            {
+                bedID = bedID,
+                routineID = 1,
+                time = waterTime
+            };
+            db.RoutineTimes.InsertOnSubmit(wT);
+
+            //Add scheduled fertilizing time
+            RoutineTime fT = new RoutineTime
+            {
+                bedID = newGarden.bedID,
+                routineID = 2,
+                time = ferTime
+            };
+            db.RoutineTimes.InsertOnSubmit(fT);
+            db.SubmitChanges();
+            return "New garden bed " + newGarden.bedName + " added";
         }
         public ActionResult ManageGarden()
         {

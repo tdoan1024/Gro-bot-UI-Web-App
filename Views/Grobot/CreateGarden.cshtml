@@ -71,7 +71,7 @@
                 <label>Bed Name</label>
             </div>
             <div class="col-lg-4 col-md-12">
-                <input type="text" class="form-control" placeholder="Enter Bed Name" />
+                <input id="bedName" type="text" class="form-control" placeholder="Enter Bed Name" />
             </div>
 
         </div>
@@ -105,31 +105,31 @@
             </div>
             <div class="col-lg-4 col-md-6" id="waterDayDiv">
                 <div>
-                    <input name="waterDay" type="checkbox" value="0">
+                    <input name="waterDay" type="checkbox" value="1">
                     <span>Sunday</span>
                 </div>
                 <div>
-                    <input name="waterDay" type="checkbox" value="1">
+                    <input name="waterDay" type="checkbox" value="2">
                     <span>Monday</span>
                 </div>
                 <div>
-                    <input name="waterDay" type="checkbox" value="2">
+                    <input name="waterDay" type="checkbox" value="3">
                     <span>Tuesday</span>
                 </div>
                 <div>
-                    <input name="waterDay" type="checkbox" value="3">
+                    <input name="waterDay" type="checkbox" value="4">
                     <span>Wednesday</span>
                 </div>
                 <div>
-                    <input name="waterDay" type="checkbox" value="4">
+                    <input name="waterDay" type="checkbox" value="5">
                     <span>Thursday</span>
                 </div>
                 <div>
-                    <input name="waterDay" type="checkbox" value="5">
+                    <input name="waterDay" type="checkbox" value="6">
                     <span>Friday</span>
                 </div>
                 <div>
-                    <input name="waterDay" type="checkbox" value="6">
+                    <input name="waterDay" type="checkbox" value="7">
                     <span>Saturday</span>
                 </div>
             </div>
@@ -139,31 +139,31 @@
             </div>
             <div class="col-lg-4 col-md-6" id="ferDayDiv">
                 <div>
-                    <input name="ferDay" type="checkbox" value="0">
+                    <input name="ferDay" type="checkbox" value="1">
                     <span>Sunday</span>
                 </div>
                 <div>
-                    <input name="ferDay" type="checkbox" value="1">
+                    <input name="ferDay" type="checkbox" value="2">
                     <span>Monday</span>
                 </div>
                 <div>
-                    <input name="ferDay" type="checkbox" value="2">
+                    <input name="ferDay" type="checkbox" value="3">
                     <span>Tuesday</span>
                 </div>
                 <div>
-                    <input name="ferDay" type="checkbox" value="3">
+                    <input name="ferDay" type="checkbox" value="4">
                     <span>Wednesday</span>
                 </div>
                 <div>
-                    <input name="ferDay" type="checkbox" value="4">
+                    <input name="ferDay" type="checkbox" value="5">
                     <span>Thursday</span>
                 </div>
                 <div>
-                    <input name="ferDay" type="checkbox" value="5">
+                    <input name="ferDay" type="checkbox" value="6">
                     <span>Friday</span>
                 </div>
                 <div>
-                    <input name="ferDay" type="checkbox" value="6">
+                    <input name="ferDay" type="checkbox" value="7">
                     <span>Saturday</span>
                 </div>
             </div>
@@ -207,6 +207,8 @@
                 //confirm('Please make sure you have filled in the seeds of your choice!');
                 var timeToWater = $('#waterTime').val();
                 var timetoFertilize = $('#fertilizeTime').val();
+                var bedName = $('#bedName').val();
+                var myPlantType = $('#plantTypeID').val();
 
                 //Write schedule to water onto Thingspeak
                 //$.post("https://api.thingspeak.com/update.json&quot",
@@ -219,27 +221,36 @@
                 var mySelected;
                 var myDay;
 
-                //Checkbox for Water is checked, put it into the water day list
+                //Checkbox for Watering day is checked, put it into the water day list
                 $('#waterDayDiv').find('div').each(function () {
                     mySelected = $(this).find('input[name~="waterDay"]').prop("checked");
                     myDay = $(this).find('input[name~="waterDay"]').val();
                     if (mySelected) {
+                        myItem = { "wDay": myDay };
                         myWaterDayList.push(myDay);
                     }
                 });
-                //Checkbox for Fertilizer is checked, put it into the fertilizing list
+                //Checkbox for Fertilizing day is checked, put it into the fertilizing list
                 $('#ferDayDiv').find('div').each(function () {
                     mySelected = $(this).find('input[name~="ferDay"]').prop("checked");
                     myDay = $(this).find('input[name~="ferDay"]').val();
                     if (mySelected) {
+                        var myItem = { "fDay": myDay };
                         myFerDayList.push(myDay);
                     }
                 });
 
-                alert('Days to water: ' + myWaterDayList + " Water time: " + timeToWater)
-                alert('Days to fertilize: ' + myFerDayList + " Water time: " + timetoFertilize)
+                //alert('Days to water: ' + myWaterDayList + " Water time: " + timeToWater)
+                //alert('Days to fertilize: ' + myFerDayList + " Water time: " + timetoFertilize)
 
-                reloadPage();
+                alert(myPlantType)
+                //Call method AddBed() in controller
+                var url = "@(Url.Action("AddBed", "Grobot"))";
+                $.post(url, { bedName: bedName, typeID: myPlantType, waterDays: myWaterDayList, fertilizerDays: myFerDayList, waterTime: timeToWater, ferTime: timetoFertilize })
+                    .done(function (response) {
+                        alert(response)
+                        reloadPage();
+                    });
 
             });
 
