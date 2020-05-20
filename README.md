@@ -1,5 +1,6 @@
 # Gro-bot
- Senior Engineering Design
+ Senior Engineering Design 2019-2020
+ Seattle Pacific University
  Team Green Eden
  
  Automated gardening system 'Grobot'
