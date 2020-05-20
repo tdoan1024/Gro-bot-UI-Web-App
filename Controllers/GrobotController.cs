@@ -94,7 +94,6 @@ namespace Gro_bot.Controllers
                         day = item
                     };
                     db.RoutineDays.InsertOnSubmit(wD);
-
                 }
 
                 //Add scheduled fertilizing days to database
@@ -107,7 +106,6 @@ namespace Gro_bot.Controllers
                         day = item
                     };
                     db.RoutineDays.InsertOnSubmit(fD);
-
                 }
             }
 
@@ -123,7 +121,7 @@ namespace Gro_bot.Controllers
             //Add scheduled fertilizing time
             RoutineTime fT = new RoutineTime
             {
-                bedID = newGarden.bedID,
+                bedID = bedID,
                 routineID = 2,
                 time = ferTime
             };
@@ -131,6 +129,7 @@ namespace Gro_bot.Controllers
             db.SubmitChanges();
             return "New garden bed " + newGarden.bedName + " added";
         }
+
         public ActionResult ManageGarden()
         {
             var myModel = TempData["myModel"] as ExistingGarden ?? new ExistingGarden
@@ -139,7 +138,7 @@ namespace Gro_bot.Controllers
             };
 
             var myGarden = (from g in db.GardenBeds
-                            select g).FirstOrDefault();
+                            select g).First();
 
             myModel.gardenID = myGarden.bedID;
             myModel.gardenName = myGarden.bedName;
