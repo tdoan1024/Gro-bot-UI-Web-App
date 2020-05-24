@@ -30,6 +30,9 @@ namespace Gro_bot
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertAttributeType(AttributeType instance);
+    partial void UpdateAttributeType(AttributeType instance);
+    partial void DeleteAttributeType(AttributeType instance);
     partial void InsertBedFeedbackValue(BedFeedbackValue instance);
     partial void UpdateBedFeedbackValue(BedFeedbackValue instance);
     partial void DeleteBedFeedbackValue(BedFeedbackValue instance);
@@ -80,6 +83,14 @@ namespace Gro_bot
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<AttributeType> AttributeTypes
+		{
+			get
+			{
+				return this.GetTable<AttributeType>();
+			}
+		}
+		
 		public System.Data.Linq.Table<BedFeedbackValue> BedFeedbackValues
 		{
 			get
@@ -125,6 +136,92 @@ namespace Gro_bot
 			get
 			{
 				return this.GetTable<RoutineTime>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AttributeTypes")]
+	public partial class AttributeType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _attID;
+		
+		private string _attCode;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnattIDChanging(int value);
+    partial void OnattIDChanged();
+    partial void OnattCodeChanging(string value);
+    partial void OnattCodeChanged();
+    #endregion
+		
+		public AttributeType()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_attID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int attID
+		{
+			get
+			{
+				return this._attID;
+			}
+			set
+			{
+				if ((this._attID != value))
+				{
+					this.OnattIDChanging(value);
+					this.SendPropertyChanging();
+					this._attID = value;
+					this.SendPropertyChanged("attID");
+					this.OnattIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_attCode", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string attCode
+		{
+			get
+			{
+				return this._attCode;
+			}
+			set
+			{
+				if ((this._attCode != value))
+				{
+					this.OnattCodeChanging(value);
+					this.SendPropertyChanging();
+					this._attCode = value;
+					this.SendPropertyChanged("attCode");
+					this.OnattCodeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -903,6 +1000,8 @@ namespace Gro_bot
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
+		private int _id;
+		
 		private int _bedID;
 		
 		private int _routineID;
@@ -917,6 +1016,8 @@ namespace Gro_bot
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
     partial void OnbedIDChanging(int value);
     partial void OnbedIDChanged();
     partial void OnroutineIDChanging(int value);
@@ -932,7 +1033,27 @@ namespace Gro_bot
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bedID", DbType="Int NOT NULL")]
 		public int bedID
 		{
 			get
@@ -956,7 +1077,7 @@ namespace Gro_bot
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_routineID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_routineID", DbType="Int NOT NULL")]
 		public int routineID
 		{
 			get

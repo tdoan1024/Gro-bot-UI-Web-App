@@ -243,7 +243,6 @@
                 //alert('Days to water: ' + myWaterDayList + " Water time: " + timeToWater)
                 //alert('Days to fertilize: ' + myFerDayList + " Water time: " + timetoFertilize)
 
-                alert(myPlantType)
                 //Call method AddBed() in controller
                 var url = "@(Url.Action("AddBed", "Grobot"))";
                 $.post(url, { bedName: bedName, typeID: myPlantType, waterDays: myWaterDayList, fertilizerDays: myFerDayList, waterTime: timeToWater, ferTime: timetoFertilize })
@@ -272,10 +271,6 @@
             })
 
             $(document).ready(function () {
-                //$.post("https://thingspeak.com/channels/1006409/field/4/last.txt",
-                //    function (response) {
-                //        alert(response)
-                //    });
                 });
 
 

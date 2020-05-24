@@ -95,6 +95,7 @@ namespace Gro_bot.Controllers
                     };
                     db.RoutineDays.InsertOnSubmit(wD);
                 }
+                db.SubmitChanges();
 
                 //Add scheduled fertilizing days to database
                 foreach (var item in fertilizerDays)
@@ -107,6 +108,8 @@ namespace Gro_bot.Controllers
                     };
                     db.RoutineDays.InsertOnSubmit(fD);
                 }
+                db.SubmitChanges();
+
             }
 
             //Add scheduled water time
@@ -136,8 +139,9 @@ namespace Gro_bot.Controllers
             {
                 
             };
-
+            int max = db.GardenBeds.Max(i => i.bedID);
             var myGarden = (from g in db.GardenBeds
+                            where g.bedID == max
                             select g).First();
 
             myModel.gardenID = myGarden.bedID;
@@ -147,10 +151,10 @@ namespace Gro_bot.Controllers
                               where f.bedID == myGarden.bedID
                               select f).FirstOrDefault();
 
-            myModel.light = myFeedback.light;
-            myModel.moisture = myFeedback.moisture;
-            myModel.temperature = myFeedback.temperature;
-            myModel.currentDay = myFeedback.currentDay;
+            //myModel.light = myFeedback.light;
+            //myModel.moisture = myFeedback.moisture;
+            //myModel.temperature = myFeedback.temperature;
+            //myModel.currentDay = myFeedback.currentDay;
 
             var myThreshold = (from t in db.PlantTypes
                                where t.typeID == myGarden.typeID
