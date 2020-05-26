@@ -139,9 +139,9 @@ namespace Gro_bot.Controllers
             {
                 
             };
-            int max = db.GardenBeds.Max(i => i.bedID);
+            //int max = db.GardenBeds.Max(i => i.bedID);
             var myGarden = (from g in db.GardenBeds
-                            where g.bedID == max
+                            where g.bedID == db.GardenBeds.Max(i => i.bedID)
                             select g).First();
 
             myModel.gardenID = myGarden.bedID;
