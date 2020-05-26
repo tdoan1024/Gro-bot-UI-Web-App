@@ -138,6 +138,13 @@ namespace Gro_bot
 				return this.GetTable<RoutineTime>();
 			}
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.grobot_CheckRoutine")]
+		public ISingleResult<grobot_CheckRoutineResult> grobot_CheckRoutine()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<grobot_CheckRoutineResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AttributeTypes")]
@@ -1540,6 +1547,50 @@ namespace Gro_bot
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	public partial class grobot_CheckRoutineResult
+	{
+		
+		private System.Nullable<int> _CurrentDay;
+		
+		private System.Nullable<int> _CurrentTime;
+		
+		public grobot_CheckRoutineResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CurrentDay", DbType="Int")]
+		public System.Nullable<int> CurrentDay
+		{
+			get
+			{
+				return this._CurrentDay;
+			}
+			set
+			{
+				if ((this._CurrentDay != value))
+				{
+					this._CurrentDay = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CurrentTime", DbType="Int")]
+		public System.Nullable<int> CurrentTime
+		{
+			get
+			{
+				return this._CurrentTime;
+			}
+			set
+			{
+				if ((this._CurrentTime != value))
+				{
+					this._CurrentTime = value;
+				}
 			}
 		}
 	}

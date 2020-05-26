@@ -55,7 +55,7 @@
 
 <body>
     <!--Modal to add new tool-->
-    <div class="modal fade" id="myCyclesModal" style="z-index:299999;" tabindex="-1" role="dialog" aria-labelledby="myCyclesModalLabel">
+    @*<div class="modal fade" id="myCyclesModal" style="z-index:299999;" tabindex="-1" role="dialog" aria-labelledby="myCyclesModalLabel">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -70,14 +70,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <div class="row">
         <div class="visible-lg-inline-block" style="text-align: center"><img src="~/Content/Images/GrobotLogo.png" title="Gro-Bot" /></div>
 
         <div class="visible-lg-inline-block">
             <h1>
-                Your Garden
+                Garden Health Report
             </h1>
         </div>
     </div>
@@ -108,13 +108,13 @@
                 </span>
                 <br />
 
-                <span class="largeText">
+                @*<span class="largeText">
                     Progress: @Model.currentDay/@Model.plantTypeCycle days
                 </span>
                 <br />
                 <div class="progress center-block" style="width: 50%">
                     <div class="progress-bar progress-bar-striped active bg-success" role="progressbar" style="width:@Model.progress%" aria-valuenow=@Model.currentDay aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+                </div>*@
             }
         </div><br /><br /><br /><br />
 
@@ -173,16 +173,14 @@
     {
 
         <script type="text/javascript">
-
+            var mybedID = @Model.gardenID;
             setTimeout(function(){
                     window.location.href = "/Grobot/ManageGarden";
             }, 60000)
 
-            var myTemp = $('#temp').text();
-            var myMoisture = $('#moisture').text();
-            //var myLight = $('#light').text();
-            var lowestTemp = @Model.lowestTemp;
-            var highestTemp = @Model.highestTemp;
+            var APIKey = '5RHD8MI4K249J8EU';
+            var Routine1 = 1;
+            var Routine2 = 2;
 
             
 
@@ -191,40 +189,36 @@
                 window.location.href = locPage;
             }
 
-            function compareFeedback(temp,moisture,light) {
-                if (temp < @Model.lowestTemp) {
-                    $('#temp').removeClass('healthy');
-                    $('#temp').addClass('needAttention');
-                    $('#noteTemp').addClass('text-danger');
-                    $('#noteTemp').text('Low Temperature')
-                }
-                else if (temp > @Model.highestTemp) {
-                    $('#temp').removeClass('healthy');
-                    $('#temp').addClass('needAttention');
-                    $('#noteTemp').addClass('text-danger');
-                    $('#noteTemp').text('High Temperature')
-                }
 
-                if (moisture < @Model.lowestMoisture) {
-                    $('#moisture').removeClass('healthy');
-                    $('#moisture').addClass('needAttention');
-                    $('#noteMoisture').addClass('text-danger');
-                    $('#noteMosture').text('Too Dry')
-                }
-                else if (moisture > @Model.highestMoisture) {
-                    $('#moisture').removeClass('healthy');
-                    $('#moisture').addClass('needAttention');
-                    $('#noteMoisture').addClass('text-danger');
-                    $('#noteMoisture').text('Too Wet')
-                }
-
+            function checkRoutine() {
+                var url = "@(Url.Action("CheckRoutine", "Grobot"))";
+                $.post(url, {bedID : mybedID  })
+                    .done(function (response) {
+                        //alert(response)
+                        if (response == '1') {
+                            $.post("https://api.thingspeak.com/update.json&quot",
+                                {
+                                    api_key: APIKey,
+                                    field4: Routine1
+                                })
+                        }
+                        if (response == '2') {
+                            $.post("https://api.thingspeak.com/update.json&quot",
+                                {
+                                    api_key: APIKey,
+                                    field4: Routine2
+                                })
+                        }
+                    });
             }
-
-            
+            //Check routine on page load
+            window.onload = checkRoutine();
 
             $(document).ready(function () {
-                //compareFeedback(myTemp, myMoisture);
+                checkRoutine();
             })
+
+
         </script>
 
 

@@ -203,6 +203,7 @@
             //setInterval('window.location.reload()', 10000);
 
             var APIKey = '5RHD8MI4K249J8EU';
+            var Routine0 = 0;
             $('#CreateNewGarden').click(function () {
                 //confirm('Please make sure you have filled in the seeds of your choice!');
                 var timeToWater = $('#waterTime').val();
@@ -210,12 +211,6 @@
                 var bedName = $('#bedName').val();
                 var myPlantType = $('#plantTypeID').val();
 
-                //Write schedule to water onto Thingspeak
-                //$.post("https://api.thingspeak.com/update.json&quot",
-                //    {
-                //        api_key: APIKey,
-                //        field4: timeToWater
-                //    })
                 var myWaterDayList = [];
                 var myFerDayList = [];
                 var mySelected;
@@ -226,7 +221,7 @@
                     mySelected = $(this).find('input[name~="waterDay"]').prop("checked");
                     myDay = $(this).find('input[name~="waterDay"]').val();
                     if (mySelected) {
-                        myItem = { "wDay": myDay };
+                        //myItem = { "wDay": myDay };
                         myWaterDayList.push(myDay);
                     }
                 });
@@ -235,7 +230,7 @@
                     mySelected = $(this).find('input[name~="ferDay"]').prop("checked");
                     myDay = $(this).find('input[name~="ferDay"]').val();
                     if (mySelected) {
-                        var myItem = { "fDay": myDay };
+                        //var myItem = { "fDay": myDay };
                         myFerDayList.push(myDay);
                     }
                 });
@@ -247,15 +242,18 @@
                 var url = "@(Url.Action("AddBed", "Grobot"))";
                 $.post(url, { bedName: bedName, typeID: myPlantType, waterDays: myWaterDayList, fertilizerDays: myFerDayList, waterTime: timeToWater, ferTime: timetoFertilize })
                     .done(function (response) {
+                        //Send command '0' to Thingspeak to start planting
+                        $.post("https://api.thingspeak.com/update.json&quot",
+                            {
+                                api_key: APIKey,
+                                field4: Routine0
+                            })
                         alert(response)
-                        reloadPage();
+                        var locPage = "/Home/Index";
+                        window.location.href = locPage;
                     });
 
             });
-
-
-
-
 
             function reloadPage(plantTypeID) {
                 var locPage = "/Grobot/CreateGarden";

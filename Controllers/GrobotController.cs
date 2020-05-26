@@ -170,7 +170,67 @@ namespace Gro_bot.Controllers
 
             myModel.progress = Convert.ToDouble((myModel.currentDay*100)/Convert.ToInt32(myModel.plantTypeCycle));
 
+
             return View(myModel);
+        }
+
+        public string CheckRoutine(string bedID)
+        {
+            int myBedID;
+            bool result = Int32.TryParse(bedID, out myBedID);
+            if (result)
+            {
+                var currentDay = (from t in db.grobot_CheckRoutine()
+                             select t.CurrentDay).First();
+                var currentTime = (from t in db.grobot_CheckRoutine()
+                                  select t.CurrentTime).First();
+
+                var waterDays = new List<int>();
+                var ferDays = new List<int>();
+                var waterTime = (from t in db.RoutineTimes
+                                 where t.bedID == myBedID && t.routineID == 1
+                                 select t.time).First();
+                var ferTime = (from t in db.RoutineTimes
+                                 where t.bedID == myBedID && t.routineID == 2
+                                 select t.time).First();
+
+                waterDays = (from d in db.RoutineDays
+                             where d.bedID == myBedID && d.routineID == 1
+                             select d.day).ToList();
+                ferDays = (from d in db.RoutineDays
+                             where d.bedID == myBedID && d.routineID == 2
+                             select d.day).ToList();
+
+                if (waterDays.Any())
+                {
+                    foreach (var d in waterDays)
+                    {
+                        if (d == currentDay)
+                        {
+                            if (waterTime == currentTime)
+                            {
+                                return "1";
+                            }
+                        }
+                    }
+                }
+                if (ferDays.Any())
+                {
+                    foreach (var d in ferDays)
+                    {
+                        if (d == currentDay)
+                        {
+                            if (ferTime == currentTime)
+                            {
+                                return "2";
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            return "No action needed";
         }
     }
 

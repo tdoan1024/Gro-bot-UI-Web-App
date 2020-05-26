@@ -15,9 +15,23 @@ namespace Gro_bot.Models
         public int wDay { get; set; }
     }
 
+    public class today
+    {
+        public int? currentDay { get; set; }
+        public int? currentTime { get; set; }
+    }
     public class fertilizingDay
     {
         public int fDay { get; set; }
+    }
+
+    public class scheduleObject
+    {
+        public List<int> waterDay { get; set; }
+        public List<int> ferDay { get; set; }
+        public int waterTime { get; set; }
+        public int ferTime { get; set; }
+
     }
     public class Garden
     {

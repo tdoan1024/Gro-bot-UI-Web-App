@@ -20,7 +20,7 @@
         <elementListCompartment Id="0aa92ca3-e3e1-4294-8eaf-70e7dba5272f" absoluteBounds="1.1400000000000001, 3.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.125 : 3.69794840494792); (3.63541916666667 : 3.69794840494792 : JumpStart); (3.80208583333333 : 3.69794840494792 : JumpEnd); (4.375 : 3.69794840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.125 : 3.69794840494792); (4.375 : 3.69794840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/GardenBed/GardenBed_BedFeedbackValue" />
       <nodes>
         <classShapeMoniker Id="ef91b811-b2ed-4b6a-873b-cb3146e04e33" />
@@ -33,7 +33,7 @@
         <elementListCompartment Id="e5ea831e-129e-4719-b98f-b753d0cf2e43" absoluteBounds="2.265, 6.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.7187525 : 5.875); (3.7187525 : 3.19272170247396); (3.125 : 3.19272170247396)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.7187525 : 5.875); (3.7187525 : 3.19272170247396); (3.125 : 3.19272170247396)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/PlantType/PlantType_GardenBed" />
       <nodes>
         <classShapeMoniker Id="158e586d-7a18-416a-b86a-4df2b673527e" />
@@ -46,7 +46,7 @@
         <elementListCompartment Id="56531b33-a306-4d52-a37d-89264e986bc2" absoluteBounds="4.89, 6.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.125 : 2.78125); (6.65625 : 2.78125); (6.65625 : 5.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.125 : 2.78125); (6.65625 : 2.78125); (6.65625 : 5.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/GardenBed/GardenBed_RoutineDay" />
       <nodes>
         <classShapeMoniker Id="ef91b811-b2ed-4b6a-873b-cb3146e04e33" />
@@ -59,7 +59,7 @@
         <elementListCompartment Id="bfceef9e-5e05-443d-9542-5665b0d5e029" absoluteBounds="1.1400000000000001, 5.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.125 : 5.78125); (3.63541916666667 : 5.78125 : JumpStart); (3.80208583333333 : 5.78125 : JumpEnd); (4.875 : 5.78125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.125 : 5.78125); (3.63541916666667 : 5.78125 : JumpStart); (3.80208583333333 : 5.78125 : JumpEnd); (4.875 : 5.78125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/Routine/Routine_RoutineDay" />
       <nodes>
         <classShapeMoniker Id="cf26cf08-9d3b-4cbe-b973-e082ac77c80c" />
@@ -72,7 +72,7 @@
         <elementListCompartment Id="8ef206a7-a627-4213-b54d-1b7ca4d60f73" absoluteBounds="1.1400000000000001, 1.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.125 : 2.75); (2.125 : 2.3862939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.125 : 2.75); (2.125 : 2.3862939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasses1DataContext/GardenBed/GardenBed_RoutineTime" />
       <nodes>
         <classShapeMoniker Id="ef91b811-b2ed-4b6a-873b-cb3146e04e33" />

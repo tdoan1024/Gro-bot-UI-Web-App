@@ -70,4 +70,10 @@
       <Association Name="Routine_RoutineTime" Member="Routine" ThisKey="routineID" OtherKey="routineID" Type="Routine" IsForeignKey="true" />
     </Type>
   </Table>
+  <Function Name="dbo.grobot_CheckRoutine" Method="grobot_CheckRoutine">
+    <ElementType Name="grobot_CheckRoutineResult">
+      <Column Name="CurrentDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CurrentTime" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>
