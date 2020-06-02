@@ -98,7 +98,7 @@
 
             @if (Model.gardenID != null)
             {
-                
+
                 <span class="largeText">
                     <strong>Bed: </strong>@Model.gardenName
                 </span>
@@ -128,18 +128,20 @@
                             <td class="text-center">
                                 Temperature  <i class='fas fa-temperature-high'></i>
                             </td>
-                            <td id="temp" class="text-center ">@*@Model.temperature*@
+                            <td id="temp" class="text-center ">
+                                @*@Model.temperature*@
                                 @*<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/widgets/172652"></iframe>*@
                                 <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
                             </td>
-                           
+
                             @*<td class="text-center" id="noteTemp"></td>*@
                         </tr>
                         <tr>
                             <td class="text-center">
                                 Moisture  <i class='fas fa-tint'></i>
                             </td>
-                            <td id="moisture" class="text-center ">@*@Model.moisture*@
+                            <td id="moisture" class="text-center ">
+                                @*@Model.moisture*@
                                 @*<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/widgets/172766"></iframe>*@
                                 <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
                             </td>
@@ -149,7 +151,8 @@
                             <td class="text-center">
                                 Light  <i class='fas fa-cloud-sun'></i>
                             </td>
-                            <td id="light" class="text-center ">@*@Model.light*@
+                            <td id="light" class="text-center ">
+                                @*@Model.light*@
                                 @*<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/widgets/172767"></iframe>*@
                                 <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1006409/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
                             </td>
@@ -163,6 +166,9 @@
         <a class="btn btn-info" href="https://thingspeak.com/channels/1006409" target="_blank">
             See more on ThingSpeak channel
         </a>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-danger" id="Reset">Reset system</button>
+
     </div>
 
     <hr />
@@ -181,6 +187,7 @@
             var APIKey = '5RHD8MI4K249J8EU';
             var Routine1 = 1;
             var Routine2 = 2;
+            var Reset = -1
 
             
 
@@ -189,7 +196,15 @@
                 window.location.href = locPage;
             }
 
-
+            $('#Reset').click(function () {
+                $.post("https://api.thingspeak.com/update.json&quot",
+                    {
+                        api_key: APIKey,
+                        field4: Reset
+                    })
+                alert("Resetting Grobot...")
+                reloadPage();
+            });
             function checkRoutine() {
                 var url = "@(Url.Action("CheckRoutine", "Grobot"))";
                 $.post(url, {bedID : mybedID  })
