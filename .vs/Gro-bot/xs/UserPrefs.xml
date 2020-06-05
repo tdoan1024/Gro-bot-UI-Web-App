@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{F6846435-07AB-46FA-BA73-E7A885C12731}|">
+  <MonoDevelop.Ide.ItemProperties.Gro-bot PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/GrobotController.cs">
+    <Files>
+      <File FileName="Views/Grobot/ManageGarden.cshtml" Line="4" Column="7" />
+      <File FileName="Controllers/GrobotController.cs" Line="182" Column="14" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Gro-bot" expanded="True">
+            <Node name="Gro-bot" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="GrobotController.cs" selected="True" />
+              </Node>
+              <Node name="Views" expanded="True">
+                <Node name="Grobot" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
